@@ -13,7 +13,7 @@ library(patchwork)
 # SETUP  ####
 
 #Functions
-create.nUMI.data.frame <- function(object_list, use.genes, names = sample_names, max_n_spots = MAX_N_SPOTS)
+create.nUMI.data.frame <- function(object_list, lower_quantile, upper_quantile, names = sample_names, use.genes =F, max_n_spots = MAX_N_SPOTS)
 {
   df <- c(1:max_n_spots)
   
@@ -39,37 +39,68 @@ create.nUMI.data.frame <- function(object_list, use.genes, names = sample_names,
   rownames(df) <- NULL
   colnames(df) <- c("x",names)
   df <- data.frame(df)
-  df$x <- factor(df$x)
   df <- gather(df, sample, count, names[[1]]:names[[length(names)]],factor_key = T)
-  df$count <- log10(df$count)
+  df <- na.omit(df)
+  df <- df[which(df$count < quantile(df$count,upper_quantile) & df$count
+                 > quantile(df$count,lower_quantile)),]
   return(df)
 }
 
-
-plot.nUMI.dotplot <- function(data, names = sample_names, use.genes = F)
+plot.nUMI.dotplot <- function(data, lower_quantile = 0, upper_quantile = 1, names = sample_names, use.genes = F)
 {
-  data <- create.nUMI.data.frame(data, use.genes)
+  data <- create.nUMI.data.frame(data, lower_quantile, upper_quantile, names, use.genes)
   
   if(use.genes)
   {
     ggplot(data, mapping = aes(data, x=x, y=count, col = sample)) +
       geom_point() +
-      labs(y = "log10 Gene Count", x = "Spots") +
-      coord_cartesian(xlim=c(-100,nrow(data)/length(names)+100)) +
-      theme(
-        axis.ticks.x = element_blank(),
-        axis.text.x = element_blank())
+      labs(title = paste0("Filtered with: lower quantile: ",lower_quantile," upper quantile: ", upper_quantile), y = "Gene Count", x = "Spots") +
+      scale_y_log10() +
+      scale_x_continuous(breaks=seq(0,max(data$x),200))
   }
   else
   {
     ggplot(data, mapping = aes(data, x=x, y=count, col = sample)) +
       geom_point() +
-      labs(y = "log10 UMI Count", x = "Spots") +
-      coord_cartesian(xlim=c(-100,nrow(data)/length(names)+100)) +
-      theme(
-        axis.ticks.x = element_blank(),
-        axis.text.x = element_blank())
+      labs(title = paste0("Filtered with: lower quantile: ",lower_quantile," upper quantile: ", upper_quantile), y = "UMI Count", x = "Spots") +
+      scale_y_log10() +
+      scale_x_continuous(breaks=seq(0,max(data$x),200))
   }
+}
+
+create.saturation.data.frame <- function(object_list, lower_quantile, upper_quantile, names = sample_names)
+{
+  df <- matrix(nrow = 0,ncol = 4)
+  for(idx in 1:length(object_list))
+  {
+    UMI_count <- c(object_list[[idx]]$nCount_RNA)
+    Gene_count <- c(object_list[[idx]]$nFeature_RNA)
+    sample <- c(rep(names[[idx]],length(UMI_count)))
+    x <- c(rep(NA,length(UMI_count)))
+    sample.df <- data.frame(cbind(x,sample,UMI_count,Gene_count))
+    sample.df$UMI_count <- as.integer(sample.df$UMI_count)
+    sample.df$Gene_count <- as.integer(sample.df$Gene_count)
+    sample.df <- sample.df[order(sample.df$UMI_count,decreasing = F),]
+    df <- rbind(df,sample.df)
+  }
+  rownames(df) <- NULL
+  df <- data.frame(df)
+  df$x <- c(1:nrow(df))
+  df$x <- factor(df$x)
+  df <- df[which(df$UMI_count < quantile(df$UMI_count,upper_quantile) & df$UMI_count
+                 > quantile(df$UMI_count,lower_quantile)),]
+  return(df)
+}
+
+plot.saturation <- function(data, lower_quantile = 0, upper_quantile = 1, names = sample_names)
+{
+  data <- create.saturation.data.frame(data, lower_quantile, upper_quantile)
+  
+  ggplot(data, mapping = aes(data, x=UMI_count, y=Gene_count, col = sample)) +
+    geom_smooth() +
+    geom_point(size = 0.2, alpha = 0.5) +
+    labs(title = paste0("Filtered with: lower quantile: ",lower_quantile," upper quantile: ", upper_quantile),y = "Gene count", x = "UMI count") +
+    scale_x_continuous(breaks=seq(0,max(data$UMI_count),5000))
 }
 
 # Variables
@@ -89,8 +120,6 @@ samples <- lapply(samples,CreateSeuratObject)
 for(idx in 1:length(samples)){ Idents(samples[[idx]])<- sample_names[[idx]]}
 
 samples_aggregated <- merge(samples[[1]], y = unlist(samples)[-1], add.cell.ids = unlist(sample_names), project = "aggregated")
-samples_aggregated$log_nCount_RNA <- log10(samples_aggregated$nCount_RNA)
-samples_aggregated$log_nFeature_RNA <- log10(samples_aggregated$nFeature_RNA)
 
 n_of_spots <-  lapply(samples,function(samples)
                       {
@@ -100,17 +129,30 @@ n_of_spots <-  lapply(samples,function(samples)
                       })
 MAX_N_SPOTS <- max(unlist(n_of_spots))
 
-nUMI_data_frame <- create.nUMI.data.frame(samples)
+# Generate plots
 
 pdf(file = "UMI-count-plots.pdf")
 plot.nUMI.dotplot(samples)
-VlnPlot(samples_aggregated,features = "nCount_RNA",y.max = quantile(samples_aggregated$nCount_RNA, .999))
-VlnPlot(samples_aggregated,features = "log_nCount_RNA",y.max = quantile(samples_aggregated$log_nCount_RNA, .999))
+VlnPlot(samples_aggregated,features = "nCount_RNA", log = T)
+plot.nUMI.dotplot(samples, lower_quantile = 0.05, upper_quantile = 0.95)
+VlnPlot(subset(samples_aggregated, subset = 
+                 nCount_RNA > quantile(samples_aggregated$nCount_RNA, 0.05) & 
+                 nCount_RNA < quantile(samples_aggregated$nCount_RNA, 0.95)),features = "nCount_RNA", log = T)
 dev.off()
 
 
 pdf(file = "gene-count-plots.pdf")
 plot.nUMI.dotplot(samples,use.genes=T)
-VlnPlot(samples_aggregated,features = "nFeature_RNA",y.max = quantile(samples_aggregated$nFeature_RNA, .999))
-VlnPlot(samples_aggregated,features = "log_nFeature_RNA",y.max = quantile(samples_aggregated$log_nFeature_RNA, .999))
+VlnPlot(samples_aggregated,features = "nFeature_RNA", log = T)
+plot.nUMI.dotplot(samples, lower_quantile = 0.05, upper_quantile = 0.95, use.genes = T)
+VlnPlot(subset(samples_aggregated, subset = 
+                 nFeature_RNA > quantile(samples_aggregated$nFeature_RNA, 0.05) & 
+                 nFeature_RNA < quantile(samples_aggregated$nFeature_RNA, 0.95)),features = "nFeature_RNA", log = T)
+dev.off()
+
+
+pdf(file = "saturation-plot.pdf")
+plot.saturation(samples)
+plot.saturation(samples,lower_quantile = 0.01, upper_quantile = 0.99)
+plot.saturation(samples,lower_quantile = 0.05, upper_quantile = 0.95)
 dev.off()
