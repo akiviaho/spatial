@@ -1,16 +1,31 @@
 # Antti Kiviaho 8.7.2021
-# This script is meant for initial analysis of a Spatial Transcriptomics dataset implemented with the Visium technology. Three plots are produced:
-# 1. UMI count plot by spot + violin spots for all samples
+# This script is meant for initial analysis of a Spatial Transcriptomics dataset implemented with the Visium technology. The plots produced are:
+# 1. UMI count plot by spot + violin plots
+# 2. Gene count plot by spot + violin plots
 # 2. Sequencing saturation plot, with UMI-count and Gene-count as axes
 # 3. PCA plot with two principal components
+# The dataset can be trimmed by setting percentile thresholds for UMI-counts. Plot for both
+# the whole data and the trimmed data are produced.
 
 library(Seurat)
 library(hdf5r)
 library(tidyr)
 library(ggplot2)
-library(patchwork)
+
 
 # SETUP  ####
+
+# Variables
+data_folder_path <- "~/Dropbox (Compbio)/prostate_spatial/results/spaceranger-outs"
+results_folder_path <- "~/Dropbox (Compbio)/prostate_spatial/results/secondary-analysis-in-r"
+gene_lengths_file<- "~/Dropbox (Compbio)/prostate_spatial/data/reference/gene_lengths.txt"
+setwd(results_folder_path)
+
+sample_names <- list("BPH_651","BPH_688","CRPC_278","CRPC_489","CRPC_697","PC_03_6712","PC_15420OIK","PC_7875OIK")
+sample_types <- list("BPH","BPH", "CRPC","CRPC","CRPC","PC","PC","PC")
+
+lower_percentile_threshold = 0.05
+upper_percentile_threshold = 0.95
 
 #Functions
 create.nUMI.data.frame <- function(object_list, lower_quantile, upper_quantile, names = sample_names, use.genes =F, max_n_spots = MAX_N_SPOTS)
@@ -103,13 +118,58 @@ plot.saturation <- function(data, lower_quantile = 0, upper_quantile = 1, names 
     scale_x_continuous(breaks=seq(0,max(data$UMI_count),5000))
 }
 
-# Variables
-data_folder_path <- "~/Dropbox (Compbio)/prostate_spatial/results/spaceranger-outs"
-results_folder_path <- "~/Dropbox (Compbio)/prostate_spatial/results/secondary-analysis-in-r"
-setwd(results_folder_path)
+create.bulk.sample <- function(data, ncount_lower_limit , ncount_upper_limit , names = sample_names)
+{
+  result_df <- matrix(ncol = 0,nrow = nrow(data[[1]]@assays$RNA)) # All samples should contain same n of features
+  for(idx in 1:length(data))
+  {
+    sample <- subset(data[[idx]],nCount_RNA > ncount_lower_limit & nCount_RNA < ncount_upper_limit)
+    sample_df <- sample@assays$RNA[]
+    bulk_df <- rowSums(sample_df)
+    result_df <- cbind(result_df,bulk_df)
+  }
+  colnames(result_df) <- unlist(names)
+  return(data.frame(result_df))
+}
 
-sample_names <- list("BPH_651","BPH_688","CRPC_278","CRPC_489","CRPC_697","PC_03_6712","PC_15420OIK","PC_7875OIK")
+TPM.normalize <- function(data, gene_lengths = gene_lengths_file, names = sample_names)
+{
+  
+  gene_lengths <- read.csv(gene_lengths, row.names=1)
+  gene_lengths <- gene_lengths[,c("SYMBOL","LENGTH")]
+  gene_lengths <- gene_lengths[!duplicated(gene_lengths[,c("SYMBOL")]),]
+  
+  data <- data[-which(rowSums(data) == 0),]
+  data <- tibble::rownames_to_column(data,var="SYMBOL")
+  
+  merged_df <- merge(data,gene_lengths,by="SYMBOL",all=FALSE)
+  merged_df <- tibble::column_to_rownames(merged_df,"SYMBOL")
+  merged_df <- as.data.frame(sweep(as.matrix(merged_df),1,merged_df$LENGTH/1e+03,'/'))
+  merged_df <- merged_df[,unlist(names)]
+  
+  merged_df <- as.data.frame(sweep(as.matrix(merged_df),2,colSums(merged_df)/1e+06,'/'))
+  return(merged_df)
 
+}
+
+plot.PCA <- function(data, ncount_lower_limit = 0, ncount_upper_limit = Inf, names = sample_names, types = sample_types)
+{
+  bulk_sample <- create.bulk.sample(data, ncount_lower_limit, ncount_upper_limit)
+  normalized_bulk_sample <- TPM.normalize(bulk_sample)
+  
+  pca <- prcomp(t(normalized_bulk_sample),scale. = FALSE)
+  var.percentage <- round(pca$sdev^2/sum(pca$sdev^2)*100,2)
+  pca_data <- data.frame(sample=colnames(normalized_bulk_sample),
+                         type = unlist(types),
+                         X = pca$x[,1],
+                         Y = pca$x[,2])
+  
+  ggplot(data=pca_data, aes(x=X, y=Y, col =sample, shape =  type)) +
+    geom_point(size = 3) +
+    xlab(paste("PC1 - ", var.percentage[1], "%", sep="")) +
+    ylab(paste("PC2 - ", var.percentage[2], "%", sep="")) +
+    ggtitle(paste0("Pseudobulk PCA, ", ncount_lower_limit," < nUMI < ",ncount_upper_limit))
+}
 
 # CODE ####
 
@@ -120,6 +180,9 @@ samples <- lapply(samples,CreateSeuratObject)
 for(idx in 1:length(samples)){ Idents(samples[[idx]])<- sample_names[[idx]]}
 
 samples_aggregated <- merge(samples[[1]], y = unlist(samples)[-1], add.cell.ids = unlist(sample_names), project = "aggregated")
+n_lower <- quantile(samples_aggregated$nCount_RNA,lower_percentile_threshold)
+n_upper <- quantile(samples_aggregated$nCount_RNA,upper_percentile_threshold)
+
 
 n_of_spots <-  lapply(samples,function(samples)
                       {
@@ -129,30 +192,55 @@ n_of_spots <-  lapply(samples,function(samples)
                       })
 MAX_N_SPOTS <- max(unlist(n_of_spots))
 
+
 # Generate plots
 
 pdf(file = "UMI-count-plots.pdf")
 plot.nUMI.dotplot(samples)
-VlnPlot(samples_aggregated,features = "nCount_RNA", log = T)
-plot.nUMI.dotplot(samples, lower_quantile = 0.05, upper_quantile = 0.95)
+
+VlnPlot(samples_aggregated,features = "nCount_RNA", log = T) +
+  stat_summary(fun = median, geom='point', size = 20, colour = "black",shape=95) +
+  theme(legend.position = "none")
+
+plot.nUMI.dotplot(samples, lower_quantile = lower_percentile_threshold, upper_quantile = upper_percentile_threshold)
+
 VlnPlot(subset(samples_aggregated, subset = 
-                 nCount_RNA > quantile(samples_aggregated$nCount_RNA, 0.05) & 
-                 nCount_RNA < quantile(samples_aggregated$nCount_RNA, 0.95)),features = "nCount_RNA", log = T)
+                 nCount_RNA > quantile(samples_aggregated$nCount_RNA, lower_percentile_threshold) & 
+                 nCount_RNA < quantile(samples_aggregated$nCount_RNA, upper_percentile_threshold)),features = "nCount_RNA", log = T) +
+  stat_summary(fun = median, geom='point', size = 20, colour = "black",shape=95) +
+  theme(legend.position = "none")
 dev.off()
 
+####
 
 pdf(file = "gene-count-plots.pdf")
 plot.nUMI.dotplot(samples,use.genes=T)
-VlnPlot(samples_aggregated,features = "nFeature_RNA", log = T)
-plot.nUMI.dotplot(samples, lower_quantile = 0.05, upper_quantile = 0.95, use.genes = T)
+
+VlnPlot(samples_aggregated,features = "nFeature_RNA", log = T) +
+  stat_summary(fun = median, geom='point', size = 20, colour = "black",shape=95) +
+  theme(legend.position = "none")
+
+plot.nUMI.dotplot(samples, lower_quantile = lower_percentile_threshold, upper_quantile = upper_percentile_threshold, use.genes = T)
+
 VlnPlot(subset(samples_aggregated, subset = 
-                 nFeature_RNA > quantile(samples_aggregated$nFeature_RNA, 0.05) & 
-                 nFeature_RNA < quantile(samples_aggregated$nFeature_RNA, 0.95)),features = "nFeature_RNA", log = T)
+                 nCount_RNA > quantile(samples_aggregated$nCount_RNA, lower_percentile_threshold) & 
+                 nCount_RNA < quantile(samples_aggregated$nCount_RNA, upper_percentile_threshold)),features = "nFeature_RNA", log = T) +
+  stat_summary(fun = median, geom='point', size = 20, colour = "black",shape=95) +
+  theme(legend.position = "none")
 dev.off()
 
+####
 
 pdf(file = "saturation-plot.pdf")
 plot.saturation(samples)
-plot.saturation(samples,lower_quantile = 0.01, upper_quantile = 0.99)
-plot.saturation(samples,lower_quantile = 0.05, upper_quantile = 0.95)
+plot.saturation(samples,lower_quantile = lower_percentile_threshold, upper_quantile = upper_percentile_threshold)
+dev.off()
+
+####
+
+pdf(file ="PCA-plots.pdf")
+
+plot.PCA(samples)
+plot.PCA(samples,ncount_lower_limit = n_lower,ncount_upper_limit = n_upper)
+
 dev.off()
