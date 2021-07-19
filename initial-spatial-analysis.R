@@ -21,8 +21,8 @@ results_folder_path <- "~/Dropbox (Compbio)/prostate_spatial/results/secondary-a
 gene_lengths_file<- "~/Dropbox (Compbio)/prostate_spatial/data/reference/gene_lengths.txt"
 setwd(results_folder_path)
 
-sample_names <- list("BPH_651","BPH_688","CRPC_278","CRPC_489","CRPC_697","PC_03_6712","PC_15420OIK","PC_7875OIK")
-sample_types <- list("BPH","BPH", "CRPC","CRPC","CRPC","PC","PC","PC")
+sample_names <- list("BPH_651","BPH_688","CRPC_278","CRPC_489","CRPC_697","PC_03_6712","PC_15420OIK","PC_7875OIK","PC_4980")
+sample_types <- list("BPH","BPH", "CRPC","CRPC","CRPC","PC","PC","PC","PC")
 
 lower_percentile_threshold = 0.05
 upper_percentile_threshold = 0.95
