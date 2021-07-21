@@ -36,7 +36,7 @@ create.nUMI.data.frame <- function(object_list, lower_quantile, upper_quantile, 
   {
     for(idx in 1:length(object_list))
     {
-      sample_nFeature <- c(object_list[[idx]]$nFeature_RNA, rep(NA,max_n_spots-length(object_list[[idx]]$nFeature_RNA)))
+      sample_nFeature <- c(object_list[[idx]]$nFeature_Spatial, rep(NA,max_n_spots-length(object_list[[idx]]$nFeature_Spatial)))
       sample_nFeature <- sort(sample_nFeature,decreasing = T,na.last = T)
       df <- cbind(df,sample_nFeature)
     }
@@ -46,7 +46,7 @@ create.nUMI.data.frame <- function(object_list, lower_quantile, upper_quantile, 
   {
     for(idx in 1:length(object_list))
     {
-      sample_nUMI <- c(object_list[[idx]]$nCount_RNA, rep(NA,max_n_spots-length(object_list[[idx]]$nCount_RNA)))
+      sample_nUMI <- c(object_list[[idx]]$nCount_Spatial, rep(NA,max_n_spots-length(object_list[[idx]]$nCount_Spatial)))
       sample_nUMI <- sort(sample_nUMI,decreasing = T,na.last = T)
       df <- cbind(df,sample_nUMI)
     }
@@ -88,8 +88,8 @@ create.saturation.data.frame <- function(object_list, lower_quantile, upper_quan
   df <- matrix(nrow = 0,ncol = 4)
   for(idx in 1:length(object_list))
   {
-    UMI_count <- c(object_list[[idx]]$nCount_RNA)
-    Gene_count <- c(object_list[[idx]]$nFeature_RNA)
+    UMI_count <- c(object_list[[idx]]$nCount_Spatial)
+    Gene_count <- c(object_list[[idx]]$nFeature_Spatial)
     sample <- c(rep(names[[idx]],length(UMI_count)))
     x <- c(rep(NA,length(UMI_count)))
     sample.df <- data.frame(cbind(x,sample,UMI_count,Gene_count))
@@ -120,11 +120,11 @@ plot.saturation <- function(data, lower_quantile = 0, upper_quantile = 1, names 
 
 create.bulk.sample <- function(data, ncount_lower_limit , ncount_upper_limit , names = sample_names)
 {
-  result_df <- matrix(ncol = 0,nrow = nrow(data[[1]]@assays$RNA)) # All samples should contain same n of features
+  result_df <- matrix(ncol = 0,nrow = nrow(data[[1]]@assays$Spatial)) # All samples should contain same n of features
   for(idx in 1:length(data))
   {
-    sample <- subset(data[[idx]],nCount_RNA > ncount_lower_limit & nCount_RNA < ncount_upper_limit)
-    sample_df <- sample@assays$RNA[]
+    sample <- subset(data[[idx]],nCount_Spatial > ncount_lower_limit & nCount_Spatial < ncount_upper_limit)
+    sample_df <- sample@assays$Spatial[]
     bulk_df <- rowSums(sample_df)
     result_df <- cbind(result_df,bulk_df)
   }
@@ -174,14 +174,13 @@ plot.PCA <- function(data, ncount_lower_limit = 0, ncount_upper_limit = Inf, nam
 # CODE ####
 
 # Import data and assign names
-samples <- lapply(file.path(data_folder_path,paste0(sample_names,"_filtered_feature_bc_matrix")),Read10X)
-samples <- lapply(samples,CreateSeuratObject)
+samples <- lapply(file.path(data_folder_path,sample_names),Load10X_Spatial)
 
 for(idx in 1:length(samples)){ Idents(samples[[idx]])<- sample_names[[idx]]}
 
 samples_aggregated <- merge(samples[[1]], y = unlist(samples)[-1], add.cell.ids = unlist(sample_names), project = "aggregated")
-n_lower <- quantile(samples_aggregated$nCount_RNA,lower_percentile_threshold)
-n_upper <- quantile(samples_aggregated$nCount_RNA,upper_percentile_threshold)
+n_lower <- quantile(samples_aggregated$nCount_Spatial,lower_percentile_threshold)
+n_upper <- quantile(samples_aggregated$nCount_Spatial,upper_percentile_threshold)
 
 
 n_of_spots <-  lapply(samples,function(samples)
@@ -198,15 +197,15 @@ MAX_N_SPOTS <- max(unlist(n_of_spots))
 pdf(file = "UMI-count-plots.pdf")
 plot.nUMI.dotplot(samples)
 
-VlnPlot(samples_aggregated,features = "nCount_RNA", log = T) +
+VlnPlot(samples_aggregated,features = "nCount_Spatial", log = T) +
   stat_summary(fun = median, geom='point', size = 20, colour = "black",shape=95) +
   theme(legend.position = "none")
 
 plot.nUMI.dotplot(samples, lower_quantile = lower_percentile_threshold, upper_quantile = upper_percentile_threshold)
 
 VlnPlot(subset(samples_aggregated, subset = 
-                 nCount_RNA > quantile(samples_aggregated$nCount_RNA, lower_percentile_threshold) & 
-                 nCount_RNA < quantile(samples_aggregated$nCount_RNA, upper_percentile_threshold)),features = "nCount_RNA", log = T) +
+                 nCount_Spatial > quantile(samples_aggregated$nCount_Spatial, lower_percentile_threshold) & 
+                 nCount_Spatial < quantile(samples_aggregated$nCount_Spatial, upper_percentile_threshold)),features = "nCount_Spatial", log = T) +
   stat_summary(fun = median, geom='point', size = 20, colour = "black",shape=95) +
   theme(legend.position = "none")
 dev.off()
@@ -216,15 +215,15 @@ dev.off()
 pdf(file = "gene-count-plots.pdf")
 plot.nUMI.dotplot(samples,use.genes=T)
 
-VlnPlot(samples_aggregated,features = "nFeature_RNA", log = T) +
+VlnPlot(samples_aggregated,features = "nFeature_Spatial", log = T) +
   stat_summary(fun = median, geom='point', size = 20, colour = "black",shape=95) +
   theme(legend.position = "none")
 
 plot.nUMI.dotplot(samples, lower_quantile = lower_percentile_threshold, upper_quantile = upper_percentile_threshold, use.genes = T)
 
 VlnPlot(subset(samples_aggregated, subset = 
-                 nCount_RNA > quantile(samples_aggregated$nCount_RNA, lower_percentile_threshold) & 
-                 nCount_RNA < quantile(samples_aggregated$nCount_RNA, upper_percentile_threshold)),features = "nFeature_RNA", log = T) +
+                 nCount_Spatial > quantile(samples_aggregated$nCount_Spatial, lower_percentile_threshold) & 
+                 nCount_Spatial < quantile(samples_aggregated$nCount_Spatial, upper_percentile_threshold)),features = "nFeature_Spatial", log = T) +
   stat_summary(fun = median, geom='point', size = 20, colour = "black",shape=95) +
   theme(legend.position = "none")
 dev.off()
