@@ -17,22 +17,19 @@
 
 library(Seurat)
 
-setwd("~/Dropbox (Compbio)/prostate_spatial/data/single-cell-integration/runs/")
-results_path <- "~/Dropbox (Compbio)/prostate_spatial/results/single-cell-integration/"
+setwd("~/Dropbox (Compbio)/prostate_spatial/data/chen-sc-reference/runs/")
+results_path <- "~/Dropbox (Compbio)/prostate_spatial/results/chen-sc-reference/"
 
-data <- read.table(file = "~/Dropbox (Compbio)/prostate_spatial/data/single-cell-integration/MNN-corrected-counts.txt",header = TRUE)
+data <- read.table(file = "~/Dropbox (Compbio)/prostate_spatial/data/chen-sc-reference/MNN-corrected-counts.txt",header = TRUE)
 data <- CreateSeuratObject(data,project="single-cell")
 
 # Run clustering
 data <- ScaleData(object = data)
-data <- FindVariableGenes(object= data,  mean.function = ExpMean, dispersion.function = LogVMR,
-                          x.low.cutoff = -1, x.high.cutoff = Inf, y.cutoff = 1, do.plot = F)
-
+data <- FindVariableGenes(object= data,  mean.function = ExpMean, dispersion.function = LogVMR)
 data <- RunPCA(object =data, pcs.compute = 8, do.print = F, seed.use = 42)
 data <- ProjectPCA(object = data, do.print = FALSE)
-data <- FindClusters(object = data, reduction.type = "pca",
-                           dims.use = 1:8, print.output = FALSE, save.SNN = TRUE, force.recalc = TRUE);
-data <- RunTSNE(object = data, reduction.use = "pca",  dims.use = 1:8, perplexity = 30 ,do.fast = TRUE);
+data <- FindClusters(object = data, reduction.type = "pca",dims.use = 1:8, resolution = 0.1)
+data <- RunTSNE(object = data, reduction.use = "pca",  dims.use = 1:8, perplexity = 30 ,do.fast = TRUE)
 # 
 saveRDS(data,"tSNE-reduced-MNN-seurat-obj.rds")
 

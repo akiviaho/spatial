@@ -7,12 +7,12 @@
 # Correlation of cell-count and per gene count are calculated per sample for all 
 # genes.
 
-
+library(ggplot2)
 library(Seurat)
 library(hdf5r)
 
 
-setwd("~/Dropbox (Compbio)/prostate_spatial/results/secondary-analysis-in-r/cell-count-analysis/")
+setwd("~/Dropbox (Compbio)/prostate_spatial/results/secondary-analysis-in-r/")
 sample_names <- list("BPH_651","BPH_688","CRPC_278","CRPC_489","CRPC_697","PC_03_6712","PC_15420OIK","PC_7875OIK","PC_4980")
 sample_types <- list("BPH","BPH", "CRPC","CRPC","CRPC","PC","PC","PC","PC")
 samples <- readRDS("~/Dropbox (Compbio)/prostate_spatial/data/samples-seurat-object.rds")
@@ -27,7 +27,7 @@ plot.correlation <- function(smpls)
       cor_nCount <- cor.test(data$nCells, data$nCount_Spatial)
       cor_nFeature <- cor.test(data$nCells, data$nFeature_Spatial)
     p1 <- ggplot(data, mapping = aes(x = nCells, y = nCount_Spatial)) +
-            geom_smooth(method = "gam") +
+            geom_smooth(method = "glm") +
             geom_point() +
             ggtitle(names(smpls[idx])) +
             annotate(x=max(data$nCells)-4, y=max(data$nCount_Spatial), 
@@ -36,7 +36,7 @@ plot.correlation <- function(smpls)
                      geom="text", size=5)
             
     p2 <- ggplot(data, mapping = aes(x = nCells, y = nFeature_Spatial)) +
-            geom_smooth(method = "gam") +
+            geom_smooth(method = "glm") +
             geom_point() +
             ggtitle(names(smpls[idx])) +
             annotate(x=max(data$nCells)-4, y=max(data$nFeature_Spatial),

@@ -19,8 +19,8 @@
 library(Seurat)
 
 
-setwd("~/Dropbox (Compbio)/prostate_spatial/data/single-cell-integration/")
-results_path <- "~/Dropbox (Compbio)/prostate_spatial/results/single-cell-integration/"
+setwd("~/Dropbox (Compbio)/prostate_spatial/data/chen-sc-reference/")
+results_path <- "~/Dropbox (Compbio)/prostate_spatial/results/chen-sc-reference/"
 
 data <- read.table("GSM4203181_data.matrix.txt")
 data <- CreateSeuratObject(data,project="single-cell")
@@ -54,7 +54,7 @@ marker_genes <- c("CD3D","CD3E","CD3G","CD2","CD7","DPP4","SLAMF1","CD27","CD28"
 
 # Plot initial clusters and gene expression per clusters
 png(paste0(results_path,"gene-dotplot.png"),width = 1000, height = 400)
-DotPlot(data,genes.plot = marker_genes,group.by = "cluster",x.lab.rot = T)
+DotPlot(data,genes.plot = marker_genes,group.by = "cluster",x.lab.rot = T, dot.scale = 8) + labs(y="Cell cluster",x="Genes")
 dev.off()
 
 pdf(file=paste0(results_path,"tsne-clusters.pdf"))

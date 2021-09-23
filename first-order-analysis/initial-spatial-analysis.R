@@ -215,7 +215,7 @@ dev.off()
 pdf(file = "gene-count-plots.pdf")
 plot.nUMI.dotplot(samples,use.genes=T)
 
-VlnPlot(samples_aggregated,features = "nFeature_Spatial", log = T) +
+VlnPlot(samples_aggregated,features = "nFeature_Spatial", log = T,pt.size = 0.005) +
   stat_summary(fun = median, geom='point', size = 20, colour = "black",shape=95) +
   theme(legend.position = "none")
 
@@ -223,7 +223,7 @@ plot.nUMI.dotplot(samples, lower_quantile = lower_percentile_threshold, upper_qu
 
 VlnPlot(subset(samples_aggregated, subset = 
                  nCount_Spatial > quantile(samples_aggregated$nCount_Spatial, lower_percentile_threshold) & 
-                 nCount_Spatial < quantile(samples_aggregated$nCount_Spatial, upper_percentile_threshold)),features = "nFeature_Spatial", log = T) +
+                 nCount_Spatial < quantile(samples_aggregated$nCount_Spatial, upper_percentile_threshold)),features = "nFeature_Spatial", log = T,pt.size = 0.005) +
   stat_summary(fun = median, geom='point', size = 20, colour = "black",shape=95) +
   theme(legend.position = "none")
 dev.off()
