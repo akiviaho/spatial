@@ -1,0 +1,1670 @@
+anaconda  3  environment loaded 
+ 
+To list available conda environments, please run command:
+    conda env list
+ 
+To activate a specific conda environment, please run command:
+    source activate environment-name
+ 
+To deactivate qiime environment, run command: 
+    source deactivate
+During startup - Warning message:
+Setting LC_CTYPE failed, using "C" 
+Filtered out 24132 genes with average expressions below or equal to 0.1.
+2022-12-02 16:12:58 Start.
+Kept 1164 highly expressed or highly variable genes.
+2022-12-02 16:13:02 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 16:15:43 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 9572461.045
+Max difference of decontaminated expressions: 400.193
+
+Iteration: 2
+Log-likelihood: 9637259.506
+Max difference of decontaminated expressions: 143.387
+
+Iteration: 3
+Log-likelihood: 9653842.055
+Max difference of decontaminated expressions: 65.356
+
+Iteration: 4
+Log-likelihood: 9659856.062
+Max difference of decontaminated expressions: 34.744
+
+Iteration: 5
+Log-likelihood: 9662574.354
+Max difference of decontaminated expressions: 20.439
+
+Iteration: 6
+Log-likelihood: 9663999.565
+Max difference of decontaminated expressions: 13.031
+
+Iteration: 7
+Log-likelihood: 9664828.639
+Max difference of decontaminated expressions: 8.838
+
+Iteration: 8
+Log-likelihood: 9665348.554
+Max difference of decontaminated expressions: 6.283
+
+Iteration: 9
+Log-likelihood: 9665693.413
+Max difference of decontaminated expressions: 4.632
+
+Iteration: 10
+Log-likelihood: 9665932.274
+Max difference of decontaminated expressions: 3.515
+
+Iteration: 11
+Log-likelihood: 9666103.5
+Max difference of decontaminated expressions: 2.731
+
+Iteration: 12
+Log-likelihood: 9666229.727
+Max difference of decontaminated expressions: 2.163
+
+Iteration: 13
+Log-likelihood: 9666324.972
+Max difference of decontaminated expressions: 1.742
+
+Iteration: 14
+Log-likelihood: 9666398.271
+Max difference of decontaminated expressions: 1.423
+
+Iteration: 15
+Log-likelihood: 9666455.646
+Max difference of decontaminated expressions: 1.178
+
+Iteration: 16
+Log-likelihood: 9666501.224
+Max difference of decontaminated expressions: 0.985
+Parameter converged.
+
+2022-12-02 16:16:38 Scaling genes...
+2022-12-02 16:16:39 All finished.
+Filtered out 24687 genes with average expressions below or equal to 0.1.
+2022-12-02 16:16:57 Start.
+Kept 1120 highly expressed or highly variable genes.
+2022-12-02 16:16:59 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 16:34:44 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 30902636.463
+Max difference of decontaminated expressions: 1260.041
+
+Iteration: 2
+Log-likelihood: 31064605.349
+Max difference of decontaminated expressions: 326.724
+
+Iteration: 3
+Log-likelihood: 31102335.112
+Max difference of decontaminated expressions: 105.354
+
+Iteration: 4
+Log-likelihood: 31115403.593
+Max difference of decontaminated expressions: 42.735
+
+Iteration: 5
+Log-likelihood: 31121173.043
+Max difference of decontaminated expressions: 20.989
+
+Iteration: 6
+Log-likelihood: 31124158.3
+Max difference of decontaminated expressions: 11.944
+
+Iteration: 7
+Log-likelihood: 31125879.895
+Max difference of decontaminated expressions: 7.57
+
+Iteration: 8
+Log-likelihood: 31126952.477
+Max difference of decontaminated expressions: 5.176
+
+Iteration: 9
+Log-likelihood: 31127660.135
+Max difference of decontaminated expressions: 3.732
+
+Iteration: 10
+Log-likelihood: 31128148.091
+Max difference of decontaminated expressions: 2.795
+
+Iteration: 11
+Log-likelihood: 31128496.561
+Max difference of decontaminated expressions: 2.152
+
+Iteration: 12
+Log-likelihood: 31128752.635
+Max difference of decontaminated expressions: 1.694
+
+Iteration: 13
+Log-likelihood: 31128945.349
+Max difference of decontaminated expressions: 1.357
+
+Iteration: 14
+Log-likelihood: 31129093.336
+Max difference of decontaminated expressions: 1.104
+
+Iteration: 15
+Log-likelihood: 31129208.968
+Max difference of decontaminated expressions: 0.91
+Parameter converged.
+
+2022-12-02 16:35:24 Scaling genes...
+2022-12-02 16:35:25 All finished.
+Filtered out 24549 genes with average expressions below or equal to 0.1.
+2022-12-02 16:35:56 Start.
+Kept 1278 highly expressed or highly variable genes.
+2022-12-02 16:35:57 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 16:36:57 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 4634838.258
+Max difference of decontaminated expressions: 588.339
+
+Iteration: 2
+Log-likelihood: 4765784.63
+Max difference of decontaminated expressions: 251.944
+
+Iteration: 3
+Log-likelihood: 4807996.204
+Max difference of decontaminated expressions: 117.38
+
+Iteration: 4
+Log-likelihood: 4827154.6
+Max difference of decontaminated expressions: 62.898
+
+Iteration: 5
+Log-likelihood: 4837592.538
+Max difference of decontaminated expressions: 38.155
+
+Iteration: 6
+Log-likelihood: 4843905.543
+Max difference of decontaminated expressions: 25.317
+
+Iteration: 7
+Log-likelihood: 4847996.691
+Max difference of decontaminated expressions: 17.84
+
+Iteration: 8
+Log-likelihood: 4850784.847
+Max difference of decontaminated expressions: 13.096
+
+Iteration: 9
+Log-likelihood: 4852760.199
+Max difference of decontaminated expressions: 9.903
+
+Iteration: 10
+Log-likelihood: 4854203.749
+Max difference of decontaminated expressions: 7.663
+
+Iteration: 11
+Log-likelihood: 4855285.797
+Max difference of decontaminated expressions: 6.044
+
+Iteration: 12
+Log-likelihood: 4856114.279
+Max difference of decontaminated expressions: 4.847
+
+Iteration: 13
+Log-likelihood: 4856760.177
+Max difference of decontaminated expressions: 3.945
+
+Iteration: 14
+Log-likelihood: 4857271.638
+Max difference of decontaminated expressions: 3.253
+
+Iteration: 15
+Log-likelihood: 4857682.194
+Max difference of decontaminated expressions: 2.715
+
+Iteration: 16
+Log-likelihood: 4858015.734
+Max difference of decontaminated expressions: 2.289
+
+Iteration: 17
+Log-likelihood: 4858289.615
+Max difference of decontaminated expressions: 1.949
+
+Iteration: 18
+Log-likelihood: 4858516.674
+Max difference of decontaminated expressions: 1.674
+
+Iteration: 19
+Log-likelihood: 4858706.55
+Max difference of decontaminated expressions: 1.449
+
+Iteration: 20
+Log-likelihood: 4858866.583
+Max difference of decontaminated expressions: 1.263
+
+Iteration: 21
+Log-likelihood: 4859002.433
+Max difference of decontaminated expressions: 1.108
+
+Iteration: 22
+Log-likelihood: 4859118.514
+Max difference of decontaminated expressions: 0.977
+Parameter converged.
+
+2022-12-02 16:37:46 Scaling genes...
+2022-12-02 16:37:46 All finished.
+Filtered out 24215 genes with average expressions below or equal to 0.1.
+2022-12-02 16:37:56 Start.
+Kept 2010 highly expressed or highly variable genes.
+2022-12-02 16:37:57 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 16:38:12 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 11513822.832
+Max difference of decontaminated expressions: 1196.501
+
+Iteration: 2
+Log-likelihood: 11916109.756
+Max difference of decontaminated expressions: 1313.671
+
+Iteration: 3
+Log-likelihood: 11990465.169
+Max difference of decontaminated expressions: 1226.2
+
+Iteration: 4
+Log-likelihood: 12025506.354
+Max difference of decontaminated expressions: 1066.508
+
+Iteration: 5
+Log-likelihood: 12046316.597
+Max difference of decontaminated expressions: 892.779
+
+Iteration: 6
+Log-likelihood: 12059711.633
+Max difference of decontaminated expressions: 733.397
+
+Iteration: 7
+Log-likelihood: 12068792.836
+Max difference of decontaminated expressions: 598.645
+
+Iteration: 8
+Log-likelihood: 12075197.085
+Max difference of decontaminated expressions: 489.132
+
+Iteration: 9
+Log-likelihood: 12079857.332
+Max difference of decontaminated expressions: 401.584
+
+Iteration: 10
+Log-likelihood: 12083336.456
+Max difference of decontaminated expressions: 331.854
+
+Iteration: 11
+Log-likelihood: 12085989.957
+Max difference of decontaminated expressions: 276.144
+
+Iteration: 12
+Log-likelihood: 12088050.971
+Max difference of decontaminated expressions: 231.354
+
+Iteration: 13
+Log-likelihood: 12089677.243
+Max difference of decontaminated expressions: 195.067
+
+Iteration: 14
+Log-likelihood: 12090978.358
+Max difference of decontaminated expressions: 165.439
+
+Iteration: 15
+Log-likelihood: 12092032.186
+Max difference of decontaminated expressions: 141.063
+
+Iteration: 16
+Log-likelihood: 12092895.144
+Max difference of decontaminated expressions: 120.865
+
+Iteration: 17
+Log-likelihood: 12093608.825
+Max difference of decontaminated expressions: 104.021
+
+Iteration: 18
+Log-likelihood: 12094204.359
+Max difference of decontaminated expressions: 89.888
+
+Iteration: 19
+Log-likelihood: 12094705.374
+Max difference of decontaminated expressions: 77.966
+
+Iteration: 20
+Log-likelihood: 12095130.024
+Max difference of decontaminated expressions: 67.857
+
+Iteration: 21
+Log-likelihood: 12095492.419
+Max difference of decontaminated expressions: 59.247
+
+Iteration: 22
+Log-likelihood: 12095803.642
+Max difference of decontaminated expressions: 51.881
+
+Iteration: 23
+Log-likelihood: 12096072.482
+Max difference of decontaminated expressions: 45.554
+
+Iteration: 24
+Log-likelihood: 12096305.967
+Max difference of decontaminated expressions: 40.1
+
+Iteration: 25
+Log-likelihood: 12096509.77
+Max difference of decontaminated expressions: 35.383
+
+Iteration: 26
+Log-likelihood: 12096688.498
+Max difference of decontaminated expressions: 31.288
+
+Iteration: 27
+Log-likelihood: 12096845.925
+Max difference of decontaminated expressions: 27.724
+
+Iteration: 28
+Log-likelihood: 12096985.159
+Max difference of decontaminated expressions: 24.613
+
+Iteration: 29
+Log-likelihood: 12097108.778
+Max difference of decontaminated expressions: 21.891
+
+Iteration: 30
+Log-likelihood: 12097218.932
+Max difference of decontaminated expressions: 19.501
+Reached maximum iteration.
+
+2022-12-02 16:39:11 Scaling genes...
+2022-12-02 16:39:12 All finished.
+Filtered out 24087 genes with average expressions below or equal to 0.1.
+2022-12-02 16:39:17 Start.
+Kept 1152 highly expressed or highly variable genes.
+2022-12-02 16:39:19 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 16:39:55 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 6480553.391
+Max difference of decontaminated expressions: 1147.855
+
+Iteration: 2
+Log-likelihood: 6603507.569
+Max difference of decontaminated expressions: 640.592
+
+Iteration: 3
+Log-likelihood: 6649561.465
+Max difference of decontaminated expressions: 426.439
+
+Iteration: 4
+Log-likelihood: 6671559.686
+Max difference of decontaminated expressions: 293.6
+
+Iteration: 5
+Log-likelihood: 6683655.164
+Max difference of decontaminated expressions: 207.057
+
+Iteration: 6
+Log-likelihood: 6690935.188
+Max difference of decontaminated expressions: 149.237
+
+Iteration: 7
+Log-likelihood: 6695612.368
+Max difference of decontaminated expressions: 111.643
+
+Iteration: 8
+Log-likelihood: 6698771.81
+Max difference of decontaminated expressions: 95.059
+
+Iteration: 9
+Log-likelihood: 6700992.441
+Max difference of decontaminated expressions: 84.557
+
+Iteration: 10
+Log-likelihood: 6702604.01
+Max difference of decontaminated expressions: 75.641
+
+Iteration: 11
+Log-likelihood: 6703804.682
+Max difference of decontaminated expressions: 67.773
+
+Iteration: 12
+Log-likelihood: 6704719.015
+Max difference of decontaminated expressions: 60.876
+
+Iteration: 13
+Log-likelihood: 6705428.326
+Max difference of decontaminated expressions: 54.84
+
+Iteration: 14
+Log-likelihood: 6705987.428
+Max difference of decontaminated expressions: 49.546
+
+Iteration: 15
+Log-likelihood: 6706434.298
+Max difference of decontaminated expressions: 44.888
+
+Iteration: 16
+Log-likelihood: 6706795.865
+Max difference of decontaminated expressions: 40.77
+
+Iteration: 17
+Log-likelihood: 6707091.62
+Max difference of decontaminated expressions: 37.114
+
+Iteration: 18
+Log-likelihood: 6707335.923
+Max difference of decontaminated expressions: 33.852
+
+Iteration: 19
+Log-likelihood: 6707539.517
+Max difference of decontaminated expressions: 30.93
+
+Iteration: 20
+Log-likelihood: 6707710.556
+Max difference of decontaminated expressions: 28.303
+
+Iteration: 21
+Log-likelihood: 6707855.306
+Max difference of decontaminated expressions: 25.932
+
+Iteration: 22
+Log-likelihood: 6707978.636
+Max difference of decontaminated expressions: 23.787
+
+Iteration: 23
+Log-likelihood: 6708084.371
+Max difference of decontaminated expressions: 21.841
+
+Iteration: 24
+Log-likelihood: 6708175.545
+Max difference of decontaminated expressions: 20.072
+
+Iteration: 25
+Log-likelihood: 6708254.582
+Max difference of decontaminated expressions: 18.46
+
+Iteration: 26
+Log-likelihood: 6708323.439
+Max difference of decontaminated expressions: 16.99
+
+Iteration: 27
+Log-likelihood: 6708383.705
+Max difference of decontaminated expressions: 15.646
+
+Iteration: 28
+Log-likelihood: 6708436.68
+Max difference of decontaminated expressions: 14.416
+
+Iteration: 29
+Log-likelihood: 6708483.435
+Max difference of decontaminated expressions: 13.29
+
+Iteration: 30
+Log-likelihood: 6708524.858
+Max difference of decontaminated expressions: 12.258
+Reached maximum iteration.
+
+2022-12-02 16:40:42 Scaling genes...
+2022-12-02 16:40:42 All finished.
+Filtered out 26321 genes with average expressions below or equal to 0.1.
+2022-12-02 16:40:50 Start.
+Kept 1159 highly expressed or highly variable genes.
+2022-12-02 16:40:51 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 16:42:00 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 18736150.678
+Max difference of decontaminated expressions: 279.766
+
+Iteration: 2
+Log-likelihood: 18790757.267
+Max difference of decontaminated expressions: 94.202
+
+Iteration: 3
+Log-likelihood: 18802980.121
+Max difference of decontaminated expressions: 36.855
+
+Iteration: 4
+Log-likelihood: 18807078.639
+Max difference of decontaminated expressions: 17.847
+
+Iteration: 5
+Log-likelihood: 18808819.51
+Max difference of decontaminated expressions: 15.902
+
+Iteration: 6
+Log-likelihood: 18809687.811
+Max difference of decontaminated expressions: 14.062
+
+Iteration: 7
+Log-likelihood: 18810174.042
+Max difference of decontaminated expressions: 12.452
+
+Iteration: 8
+Log-likelihood: 18810470.611
+Max difference of decontaminated expressions: 11.077
+
+Iteration: 9
+Log-likelihood: 18810663.523
+Max difference of decontaminated expressions: 9.904
+
+Iteration: 10
+Log-likelihood: 18810795.375
+Max difference of decontaminated expressions: 8.898
+
+Iteration: 11
+Log-likelihood: 18810889.073
+Max difference of decontaminated expressions: 8.025
+
+Iteration: 12
+Log-likelihood: 18810957.772
+Max difference of decontaminated expressions: 7.261
+
+Iteration: 13
+Log-likelihood: 18811009.449
+Max difference of decontaminated expressions: 6.586
+
+Iteration: 14
+Log-likelihood: 18811049.162
+Max difference of decontaminated expressions: 5.986
+
+Iteration: 15
+Log-likelihood: 18811080.237
+Max difference of decontaminated expressions: 5.449
+
+Iteration: 16
+Log-likelihood: 18811104.935
+Max difference of decontaminated expressions: 4.967
+
+Iteration: 17
+Log-likelihood: 18811124.831
+Max difference of decontaminated expressions: 4.531
+
+Iteration: 18
+Log-likelihood: 18811141.049
+Max difference of decontaminated expressions: 4.138
+
+Iteration: 19
+Log-likelihood: 18811154.41
+Max difference of decontaminated expressions: 3.781
+
+Iteration: 20
+Log-likelihood: 18811165.521
+Max difference of decontaminated expressions: 3.456
+
+Iteration: 21
+Log-likelihood: 18811174.838
+Max difference of decontaminated expressions: 3.161
+
+Iteration: 22
+Log-likelihood: 18811182.711
+Max difference of decontaminated expressions: 2.892
+
+Iteration: 23
+Log-likelihood: 18811189.411
+Max difference of decontaminated expressions: 2.646
+
+Iteration: 24
+Log-likelihood: 18811195.149
+Max difference of decontaminated expressions: 2.422
+
+Iteration: 25
+Log-likelihood: 18811200.091
+Max difference of decontaminated expressions: 2.217
+
+Iteration: 26
+Log-likelihood: 18811204.372
+Max difference of decontaminated expressions: 2.03
+
+Iteration: 27
+Log-likelihood: 18811208.098
+Max difference of decontaminated expressions: 1.859
+
+Iteration: 28
+Log-likelihood: 18811211.356
+Max difference of decontaminated expressions: 1.702
+
+Iteration: 29
+Log-likelihood: 18811214.218
+Max difference of decontaminated expressions: 1.558
+
+Iteration: 30
+Log-likelihood: 18811216.742
+Max difference of decontaminated expressions: 1.427
+Reached maximum iteration.
+
+2022-12-02 16:42:57 Scaling genes...
+2022-12-02 16:42:58 All finished.
+Filtered out 25626 genes with average expressions below or equal to 0.1.
+2022-12-02 16:43:07 Start.
+Kept 1229 highly expressed or highly variable genes.
+2022-12-02 16:43:10 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 16:52:34 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 12284708.983
+Max difference of decontaminated expressions: 339.977
+
+Iteration: 2
+Log-likelihood: 12745019.313
+Max difference of decontaminated expressions: 141.173
+
+Iteration: 3
+Log-likelihood: 12858048.325
+Max difference of decontaminated expressions: 93.129
+
+Iteration: 4
+Log-likelihood: 12909178.035
+Max difference of decontaminated expressions: 62.547
+
+Iteration: 5
+Log-likelihood: 12937197.635
+Max difference of decontaminated expressions: 42.248
+
+Iteration: 6
+Log-likelihood: 12954093.184
+Max difference of decontaminated expressions: 28.861
+
+Iteration: 7
+Log-likelihood: 12964953.742
+Max difference of decontaminated expressions: 19.967
+
+Iteration: 8
+Log-likelihood: 12972277.674
+Max difference of decontaminated expressions: 13.985
+
+Iteration: 9
+Log-likelihood: 12977406.7
+Max difference of decontaminated expressions: 11.187
+
+Iteration: 10
+Log-likelihood: 12981110.461
+Max difference of decontaminated expressions: 9.597
+
+Iteration: 11
+Log-likelihood: 12983854.023
+Max difference of decontaminated expressions: 8.25
+
+Iteration: 12
+Log-likelihood: 12985930.598
+Max difference of decontaminated expressions: 7.105
+
+Iteration: 13
+Log-likelihood: 12987531.717
+Max difference of decontaminated expressions: 6.131
+
+Iteration: 14
+Log-likelihood: 12988786.294
+Max difference of decontaminated expressions: 5.302
+
+Iteration: 15
+Log-likelihood: 12989783.362
+Max difference of decontaminated expressions: 4.595
+
+Iteration: 16
+Log-likelihood: 12990585.8
+Max difference of decontaminated expressions: 3.992
+
+Iteration: 17
+Log-likelihood: 12991238.901
+Max difference of decontaminated expressions: 3.475
+
+Iteration: 18
+Log-likelihood: 12991775.863
+Max difference of decontaminated expressions: 3.033
+
+Iteration: 19
+Log-likelihood: 12992221.399
+Max difference of decontaminated expressions: 2.653
+
+Iteration: 20
+Log-likelihood: 12992594.17
+Max difference of decontaminated expressions: 2.376
+
+Iteration: 21
+Log-likelihood: 12992908.444
+Max difference of decontaminated expressions: 2.149
+
+Iteration: 22
+Log-likelihood: 12993175.259
+Max difference of decontaminated expressions: 1.946
+
+Iteration: 23
+Log-likelihood: 12993403.244
+Max difference of decontaminated expressions: 1.764
+
+Iteration: 24
+Log-likelihood: 12993599.214
+Max difference of decontaminated expressions: 1.601
+
+Iteration: 25
+Log-likelihood: 12993768.594
+Max difference of decontaminated expressions: 1.454
+
+Iteration: 26
+Log-likelihood: 12993915.746
+Max difference of decontaminated expressions: 1.322
+
+Iteration: 27
+Log-likelihood: 12994044.197
+Max difference of decontaminated expressions: 1.203
+
+Iteration: 28
+Log-likelihood: 12994156.827
+Max difference of decontaminated expressions: 1.096
+
+Iteration: 29
+Log-likelihood: 12994255.998
+Max difference of decontaminated expressions: 0.999
+Parameter converged.
+
+2022-12-02 16:57:49 Scaling genes...
+2022-12-02 16:57:50 All finished.
+Filtered out 27122 genes with average expressions below or equal to 0.1.
+2022-12-02 16:58:14 Start.
+Kept 955 highly expressed or highly variable genes.
+2022-12-02 16:58:15 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 17:00:03 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 5431488.565
+Max difference of decontaminated expressions: 235.627
+
+Iteration: 2
+Log-likelihood: 5469057.436
+Max difference of decontaminated expressions: 105.28
+
+Iteration: 3
+Log-likelihood: 5482075.221
+Max difference of decontaminated expressions: 49.739
+
+Iteration: 4
+Log-likelihood: 5487504.996
+Max difference of decontaminated expressions: 25.043
+
+Iteration: 5
+Log-likelihood: 5490131.84
+Max difference of decontaminated expressions: 13.485
+
+Iteration: 6
+Log-likelihood: 5491558.847
+Max difference of decontaminated expressions: 7.775
+
+Iteration: 7
+Log-likelihood: 5492406.542
+Max difference of decontaminated expressions: 4.788
+
+Iteration: 8
+Log-likelihood: 5492945.974
+Max difference of decontaminated expressions: 3.13
+
+Iteration: 9
+Log-likelihood: 5493308.067
+Max difference of decontaminated expressions: 2.155
+
+Iteration: 10
+Log-likelihood: 5493561.554
+Max difference of decontaminated expressions: 1.549
+
+Iteration: 11
+Log-likelihood: 5493745.086
+Max difference of decontaminated expressions: 1.153
+
+Iteration: 12
+Log-likelihood: 5493881.666
+Max difference of decontaminated expressions: 0.883
+Parameter converged.
+
+2022-12-02 17:00:33 Scaling genes...
+2022-12-02 17:00:33 All finished.
+Filtered out 22498 genes with average expressions below or equal to 0.1.
+2022-12-02 17:00:44 Start.
+Kept 2623 highly expressed or highly variable genes.
+2022-12-02 17:00:46 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 17:02:56 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 35815784.926
+Max difference of decontaminated expressions: 2128.353
+
+Iteration: 2
+Log-likelihood: 36146448.281
+Max difference of decontaminated expressions: 979.106
+
+Iteration: 3
+Log-likelihood: 36249037.152
+Max difference of decontaminated expressions: 471.351
+
+Iteration: 4
+Log-likelihood: 36292844.826
+Max difference of decontaminated expressions: 244.111
+
+Iteration: 5
+Log-likelihood: 36315227.608
+Max difference of decontaminated expressions: 135.765
+
+Iteration: 6
+Log-likelihood: 36328025.166
+Max difference of decontaminated expressions: 80.628
+
+Iteration: 7
+Log-likelihood: 36335935.348
+Max difference of decontaminated expressions: 50.873
+
+Iteration: 8
+Log-likelihood: 36341113.82
+Max difference of decontaminated expressions: 33.933
+
+Iteration: 9
+Log-likelihood: 36344657.293
+Max difference of decontaminated expressions: 23.791
+
+Iteration: 10
+Log-likelihood: 36347168.873
+Max difference of decontaminated expressions: 17.418
+
+Iteration: 11
+Log-likelihood: 36349001.016
+Max difference of decontaminated expressions: 13.222
+
+Iteration: 12
+Log-likelihood: 36350370.016
+Max difference of decontaminated expressions: 10.338
+
+Iteration: 13
+Log-likelihood: 36351414.039
+Max difference of decontaminated expressions: 8.278
+
+Iteration: 14
+Log-likelihood: 36352224.357
+Max difference of decontaminated expressions: 6.756
+
+Iteration: 15
+Log-likelihood: 36352863.011
+Max difference of decontaminated expressions: 5.599
+
+Iteration: 16
+Log-likelihood: 36353373.222
+Max difference of decontaminated expressions: 4.699
+
+Iteration: 17
+Log-likelihood: 36353785.751
+Max difference of decontaminated expressions: 3.986
+
+Iteration: 18
+Log-likelihood: 36354122.911
+Max difference of decontaminated expressions: 3.41
+
+Iteration: 19
+Log-likelihood: 36354401.161
+Max difference of decontaminated expressions: 2.941
+
+Iteration: 20
+Log-likelihood: 36354632.825
+Max difference of decontaminated expressions: 2.553
+
+Iteration: 21
+Log-likelihood: 36354827.256
+Max difference of decontaminated expressions: 2.231
+
+Iteration: 22
+Log-likelihood: 36354991.641
+Max difference of decontaminated expressions: 1.959
+
+Iteration: 23
+Log-likelihood: 36355131.565
+Max difference of decontaminated expressions: 1.73
+
+Iteration: 24
+Log-likelihood: 36355251.412
+Max difference of decontaminated expressions: 1.535
+
+Iteration: 25
+Log-likelihood: 36355354.656
+Max difference of decontaminated expressions: 1.367
+
+Iteration: 26
+Log-likelihood: 36355444.076
+Max difference of decontaminated expressions: 1.223
+
+Iteration: 27
+Log-likelihood: 36355521.909
+Max difference of decontaminated expressions: 1.098
+
+Iteration: 28
+Log-likelihood: 36355589.973
+Max difference of decontaminated expressions: 0.99
+Parameter converged.
+
+2022-12-02 17:06:26 Scaling genes...
+2022-12-02 17:06:26 All finished.
+Filtered out 21527 genes with average expressions below or equal to 0.1.
+2022-12-02 17:06:47 Start.
+Kept 4500 highly expressed or highly variable genes.
+2022-12-02 17:06:48 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 17:07:15 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 35857372.949
+Max difference of decontaminated expressions: 3419.375
+
+Iteration: 2
+Log-likelihood: 37220019.6
+Max difference of decontaminated expressions: 1610.59
+
+Iteration: 3
+Log-likelihood: 37581359.09
+Max difference of decontaminated expressions: 715.843
+
+Iteration: 4
+Log-likelihood: 37691961.124
+Max difference of decontaminated expressions: 352.117
+
+Iteration: 5
+Log-likelihood: 37740498.349
+Max difference of decontaminated expressions: 210.808
+
+Iteration: 6
+Log-likelihood: 37767522.547
+Max difference of decontaminated expressions: 153.98
+
+Iteration: 7
+Log-likelihood: 37784415.944
+Max difference of decontaminated expressions: 117.31
+
+Iteration: 8
+Log-likelihood: 37795682.87
+Max difference of decontaminated expressions: 91.445
+
+Iteration: 9
+Log-likelihood: 37803546.542
+Max difference of decontaminated expressions: 78.126
+
+Iteration: 10
+Log-likelihood: 37809235.283
+Max difference of decontaminated expressions: 75.143
+
+Iteration: 11
+Log-likelihood: 37813473.63
+Max difference of decontaminated expressions: 72.53
+
+Iteration: 12
+Log-likelihood: 37816709.818
+Max difference of decontaminated expressions: 70.179
+
+Iteration: 13
+Log-likelihood: 37819232.345
+Max difference of decontaminated expressions: 68.023
+
+Iteration: 14
+Log-likelihood: 37821233.377
+Max difference of decontaminated expressions: 66.016
+
+Iteration: 15
+Log-likelihood: 37822844.813
+Max difference of decontaminated expressions: 64.129
+
+Iteration: 16
+Log-likelihood: 37824159.581
+Max difference of decontaminated expressions: 62.339
+
+Iteration: 17
+Log-likelihood: 37825244.668
+Max difference of decontaminated expressions: 60.63
+
+Iteration: 18
+Log-likelihood: 37826149.33
+Max difference of decontaminated expressions: 58.991
+
+Iteration: 19
+Log-likelihood: 37826910.431
+Max difference of decontaminated expressions: 57.412
+
+Iteration: 20
+Log-likelihood: 37827555.985
+Max difference of decontaminated expressions: 55.887
+
+Iteration: 21
+Log-likelihood: 37828107.583
+Max difference of decontaminated expressions: 54.41
+
+Iteration: 22
+Log-likelihood: 37828582.065
+Max difference of decontaminated expressions: 52.977
+
+Iteration: 23
+Log-likelihood: 37828992.719
+Max difference of decontaminated expressions: 51.668
+
+Iteration: 24
+Log-likelihood: 37829350.134
+Max difference of decontaminated expressions: 50.448
+
+Iteration: 25
+Log-likelihood: 37829662.826
+Max difference of decontaminated expressions: 49.256
+
+Iteration: 26
+Log-likelihood: 37829937.703
+Max difference of decontaminated expressions: 48.089
+
+Iteration: 27
+Log-likelihood: 37830180.411
+Max difference of decontaminated expressions: 46.947
+
+Iteration: 28
+Log-likelihood: 37830395.602
+Max difference of decontaminated expressions: 45.83
+
+Iteration: 29
+Log-likelihood: 37830587.13
+Max difference of decontaminated expressions: 44.737
+
+Iteration: 30
+Log-likelihood: 37830758.21
+Max difference of decontaminated expressions: 43.667
+Reached maximum iteration.
+
+2022-12-02 17:10:35 Scaling genes...
+2022-12-02 17:10:36 All finished.
+Filtered out 22785 genes with average expressions below or equal to 0.1.
+2022-12-02 17:10:46 Start.
+Kept 2436 highly expressed or highly variable genes.
+2022-12-02 17:10:50 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 17:20:40 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 60866029.543
+Max difference of decontaminated expressions: 956.314
+
+Iteration: 2
+Log-likelihood: 61309463.759
+Max difference of decontaminated expressions: 320.369
+
+Iteration: 3
+Log-likelihood: 61447980.172
+Max difference of decontaminated expressions: 129.963
+
+Iteration: 4
+Log-likelihood: 61504748.754
+Max difference of decontaminated expressions: 61.67
+
+Iteration: 5
+Log-likelihood: 61532596.829
+Max difference of decontaminated expressions: 33.253
+
+Iteration: 6
+Log-likelihood: 61548039.189
+Max difference of decontaminated expressions: 19.846
+
+Iteration: 7
+Log-likelihood: 61557380.525
+Max difference of decontaminated expressions: 12.81
+
+Iteration: 8
+Log-likelihood: 61563405.66
+Max difference of decontaminated expressions: 8.779
+
+Iteration: 9
+Log-likelihood: 61567486.922
+Max difference of decontaminated expressions: 6.3
+
+Iteration: 10
+Log-likelihood: 61570360.046
+Max difference of decontaminated expressions: 4.687
+
+Iteration: 11
+Log-likelihood: 61572446.563
+Max difference of decontaminated expressions: 3.587
+
+Iteration: 12
+Log-likelihood: 61574001.225
+Max difference of decontaminated expressions: 2.811
+
+Iteration: 13
+Log-likelihood: 61575184.871
+Max difference of decontaminated expressions: 2.245
+
+Iteration: 14
+Log-likelihood: 61576102.803
+Max difference of decontaminated expressions: 1.822
+
+Iteration: 15
+Log-likelihood: 61576826.116
+Max difference of decontaminated expressions: 1.499
+
+Iteration: 16
+Log-likelihood: 61577404.085
+Max difference of decontaminated expressions: 1.248
+
+Iteration: 17
+Log-likelihood: 61577871.648
+Max difference of decontaminated expressions: 1.05
+
+Iteration: 18
+Log-likelihood: 61578254.079
+Max difference of decontaminated expressions: 0.891
+Parameter converged.
+
+2022-12-02 17:21:48 Scaling genes...
+2022-12-02 17:21:50 All finished.
+Filtered out 22556 genes with average expressions below or equal to 0.1.
+2022-12-02 17:22:24 Start.
+Kept 3032 highly expressed or highly variable genes.
+2022-12-02 17:22:27 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 17:25:48 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 101418166.286
+Max difference of decontaminated expressions: 493.946
+
+Iteration: 2
+Log-likelihood: 101974806.983
+Max difference of decontaminated expressions: 232.725
+
+Iteration: 3
+Log-likelihood: 102159291.59
+Max difference of decontaminated expressions: 111.402
+
+Iteration: 4
+Log-likelihood: 102241179.27
+Max difference of decontaminated expressions: 55.57
+
+Iteration: 5
+Log-likelihood: 102284175.491
+Max difference of decontaminated expressions: 28.972
+
+Iteration: 6
+Log-likelihood: 102309266.762
+Max difference of decontaminated expressions: 15.759
+
+Iteration: 7
+Log-likelihood: 102325031.431
+Max difference of decontaminated expressions: 9.439
+
+Iteration: 8
+Log-likelihood: 102335496.259
+Max difference of decontaminated expressions: 6.475
+
+Iteration: 9
+Log-likelihood: 102342745.28
+Max difference of decontaminated expressions: 4.645
+
+Iteration: 10
+Log-likelihood: 102347940.217
+Max difference of decontaminated expressions: 3.456
+
+Iteration: 11
+Log-likelihood: 102351767.887
+Max difference of decontaminated expressions: 2.941
+
+Iteration: 12
+Log-likelihood: 102354654.168
+Max difference of decontaminated expressions: 2.537
+
+Iteration: 13
+Log-likelihood: 102356873.734
+Max difference of decontaminated expressions: 2.209
+
+Iteration: 14
+Log-likelihood: 102358609.676
+Max difference of decontaminated expressions: 1.941
+
+Iteration: 15
+Log-likelihood: 102359987.505
+Max difference of decontaminated expressions: 1.718
+
+Iteration: 16
+Log-likelihood: 102361095.361
+Max difference of decontaminated expressions: 1.53
+
+Iteration: 17
+Log-likelihood: 102361996.456
+Max difference of decontaminated expressions: 1.372
+
+Iteration: 18
+Log-likelihood: 102362736.968
+Max difference of decontaminated expressions: 1.236
+
+Iteration: 19
+Log-likelihood: 102363351.19
+Max difference of decontaminated expressions: 1.12
+
+Iteration: 20
+Log-likelihood: 102363864.962
+Max difference of decontaminated expressions: 1.019
+
+Iteration: 21
+Log-likelihood: 102364298.02
+Max difference of decontaminated expressions: 0.931
+Parameter converged.
+
+2022-12-02 17:30:07 Scaling genes...
+2022-12-02 17:30:08 All finished.
+Filtered out 24871 genes with average expressions below or equal to 0.1.
+2022-12-02 17:30:31 Start.
+Kept 1437 highly expressed or highly variable genes.
+2022-12-02 17:30:34 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 17:45:29 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 66799364.943
+Max difference of decontaminated expressions: 370.084
+
+Iteration: 2
+Log-likelihood: 67174936.11
+Max difference of decontaminated expressions: 155.352
+
+Iteration: 3
+Log-likelihood: 67300448.523
+Max difference of decontaminated expressions: 67.249
+
+Iteration: 4
+Log-likelihood: 67354346.684
+Max difference of decontaminated expressions: 31.059
+
+Iteration: 5
+Log-likelihood: 67381672.217
+Max difference of decontaminated expressions: 15.554
+
+Iteration: 6
+Log-likelihood: 67397178.917
+Max difference of decontaminated expressions: 8.983
+
+Iteration: 7
+Log-likelihood: 67406710.613
+Max difference of decontaminated expressions: 5.749
+
+Iteration: 8
+Log-likelihood: 67412926.357
+Max difference of decontaminated expressions: 3.928
+
+Iteration: 9
+Log-likelihood: 67417168.083
+Max difference of decontaminated expressions: 2.853
+
+Iteration: 10
+Log-likelihood: 67420168.931
+Max difference of decontaminated expressions: 2.379
+
+Iteration: 11
+Log-likelihood: 67422355.179
+Max difference of decontaminated expressions: 2.012
+
+Iteration: 12
+Log-likelihood: 67423987.389
+Max difference of decontaminated expressions: 1.723
+
+Iteration: 13
+Log-likelihood: 67425231.498
+Max difference of decontaminated expressions: 1.491
+
+Iteration: 14
+Log-likelihood: 67426196.86
+Max difference of decontaminated expressions: 1.303
+
+Iteration: 15
+Log-likelihood: 67426957.663
+Max difference of decontaminated expressions: 1.147
+
+Iteration: 16
+Log-likelihood: 67427565.511
+Max difference of decontaminated expressions: 1.018
+
+Iteration: 17
+Log-likelihood: 67428057.091
+Max difference of decontaminated expressions: 0.908
+Parameter converged.
+
+2022-12-02 17:46:12 Scaling genes...
+2022-12-02 17:46:13 All finished.
+Filtered out 22446 genes with average expressions below or equal to 0.1.
+2022-12-02 17:46:45 Start.
+Kept 2661 highly expressed or highly variable genes.
+2022-12-02 17:46:47 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 17:49:29 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 47680786.709
+Max difference of decontaminated expressions: 691.897
+
+Iteration: 2
+Log-likelihood: 47905810.535
+Max difference of decontaminated expressions: 272.233
+
+Iteration: 3
+Log-likelihood: 47981122.778
+Max difference of decontaminated expressions: 120.723
+
+Iteration: 4
+Log-likelihood: 48012605.467
+Max difference of decontaminated expressions: 60.903
+
+Iteration: 5
+Log-likelihood: 48027971.368
+Max difference of decontaminated expressions: 34.559
+
+Iteration: 6
+Log-likelihood: 48036373.502
+Max difference of decontaminated expressions: 21.623
+
+Iteration: 7
+Log-likelihood: 48041379.05
+Max difference of decontaminated expressions: 14.65
+
+Iteration: 8
+Log-likelihood: 48044564.391
+Max difference of decontaminated expressions: 10.594
+
+Iteration: 9
+Log-likelihood: 48046698.858
+Max difference of decontaminated expressions: 7.937
+
+Iteration: 10
+Log-likelihood: 48048189.245
+Max difference of decontaminated expressions: 6.117
+
+Iteration: 11
+Log-likelihood: 48049265.232
+Max difference of decontaminated expressions: 4.823
+
+Iteration: 12
+Log-likelihood: 48050063.721
+Max difference of decontaminated expressions: 3.875
+
+Iteration: 13
+Log-likelihood: 48050670.095
+Max difference of decontaminated expressions: 3.164
+
+Iteration: 14
+Log-likelihood: 48051139.675
+Max difference of decontaminated expressions: 2.619
+
+Iteration: 15
+Log-likelihood: 48051509.489
+Max difference of decontaminated expressions: 2.194
+
+Iteration: 16
+Log-likelihood: 48051805.022
+Max difference of decontaminated expressions: 1.857
+
+Iteration: 17
+Log-likelihood: 48052044.243
+Max difference of decontaminated expressions: 1.586
+
+Iteration: 18
+Log-likelihood: 48052240.095
+Max difference of decontaminated expressions: 1.366
+
+Iteration: 19
+Log-likelihood: 48052402.073
+Max difference of decontaminated expressions: 1.185
+
+Iteration: 20
+Log-likelihood: 48052537.262
+Max difference of decontaminated expressions: 1.034
+
+Iteration: 21
+Log-likelihood: 48052651.024
+Max difference of decontaminated expressions: 0.908
+Parameter converged.
+
+2022-12-02 17:52:47 Scaling genes...
+2022-12-02 17:52:48 All finished.
+Filtered out 25270 genes with average expressions below or equal to 0.1.
+2022-12-02 17:53:09 Start.
+Kept 1145 highly expressed or highly variable genes.
+2022-12-02 17:53:10 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 17:53:59 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 4414607.455
+Max difference of decontaminated expressions: 549.914
+
+Iteration: 2
+Log-likelihood: 4557901.674
+Max difference of decontaminated expressions: 289.731
+
+Iteration: 3
+Log-likelihood: 4605105.728
+Max difference of decontaminated expressions: 159.644
+
+Iteration: 4
+Log-likelihood: 4625124.478
+Max difference of decontaminated expressions: 94.237
+
+Iteration: 5
+Log-likelihood: 4635331.255
+Max difference of decontaminated expressions: 64.101
+
+Iteration: 6
+Log-likelihood: 4641250.771
+Max difference of decontaminated expressions: 49.371
+
+Iteration: 7
+Log-likelihood: 4644999.8
+Max difference of decontaminated expressions: 39.249
+
+Iteration: 8
+Log-likelihood: 4647524.519
+Max difference of decontaminated expressions: 31.871
+
+Iteration: 9
+Log-likelihood: 4649302.728
+Max difference of decontaminated expressions: 26.214
+
+Iteration: 10
+Log-likelihood: 4650598.981
+Max difference of decontaminated expressions: 22.785
+
+Iteration: 11
+Log-likelihood: 4651570.2
+Max difference of decontaminated expressions: 22.792
+
+Iteration: 12
+Log-likelihood: 4652314.488
+Max difference of decontaminated expressions: 22.862
+
+Iteration: 13
+Log-likelihood: 4652895.782
+Max difference of decontaminated expressions: 22.894
+
+Iteration: 14
+Log-likelihood: 4653357.193
+Max difference of decontaminated expressions: 22.891
+
+Iteration: 15
+Log-likelihood: 4653728.622
+Max difference of decontaminated expressions: 22.854
+
+Iteration: 16
+Log-likelihood: 4654031.322
+Max difference of decontaminated expressions: 22.782
+
+Iteration: 17
+Log-likelihood: 4654280.714
+Max difference of decontaminated expressions: 22.678
+
+Iteration: 18
+Log-likelihood: 4654488.197
+Max difference of decontaminated expressions: 22.542
+
+Iteration: 19
+Log-likelihood: 4654662.332
+Max difference of decontaminated expressions: 22.374
+
+Iteration: 20
+Log-likelihood: 4654809.643
+Max difference of decontaminated expressions: 22.175
+
+Iteration: 21
+Log-likelihood: 4654935.166
+Max difference of decontaminated expressions: 21.946
+
+Iteration: 22
+Log-likelihood: 4655042.833
+Max difference of decontaminated expressions: 21.69
+
+Iteration: 23
+Log-likelihood: 4655135.747
+Max difference of decontaminated expressions: 21.406
+
+Iteration: 24
+Log-likelihood: 4655216.381
+Max difference of decontaminated expressions: 21.098
+
+Iteration: 25
+Log-likelihood: 4655286.721
+Max difference of decontaminated expressions: 20.766
+
+Iteration: 26
+Log-likelihood: 4655348.378
+Max difference of decontaminated expressions: 20.412
+
+Iteration: 27
+Log-likelihood: 4655402.668
+Max difference of decontaminated expressions: 20.038
+
+Iteration: 28
+Log-likelihood: 4655450.67
+Max difference of decontaminated expressions: 19.646
+
+Iteration: 29
+Log-likelihood: 4655493.279
+Max difference of decontaminated expressions: 19.238
+
+Iteration: 30
+Log-likelihood: 4655531.24
+Max difference of decontaminated expressions: 18.815
+Reached maximum iteration.
+
+2022-12-02 17:54:59 Scaling genes...
+2022-12-02 17:54:59 All finished.
+Filtered out 24840 genes with average expressions below or equal to 0.1.
+2022-12-02 17:55:08 Start.
+Kept 1345 highly expressed or highly variable genes.
+2022-12-02 17:55:10 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 17:56:56 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 15414652.118
+Max difference of decontaminated expressions: 98.204
+
+Iteration: 2
+Log-likelihood: 15439005.93
+Max difference of decontaminated expressions: 23.192
+
+Iteration: 3
+Log-likelihood: 15442360.619
+Max difference of decontaminated expressions: 6.789
+
+Iteration: 4
+Log-likelihood: 15443236.429
+Max difference of decontaminated expressions: 2.646
+
+Iteration: 5
+Log-likelihood: 15443568.189
+Max difference of decontaminated expressions: 1.539
+
+Iteration: 6
+Log-likelihood: 15443725.421
+Max difference of decontaminated expressions: 1.055
+
+Iteration: 7
+Log-likelihood: 15443811.246
+Max difference of decontaminated expressions: 0.779
+Parameter converged.
+
+2022-12-02 17:57:15 Scaling genes...
+2022-12-02 17:57:15 All finished.
+Filtered out 24351 genes with average expressions below or equal to 0.1.
+2022-12-02 17:57:28 Start.
+Kept 1287 highly expressed or highly variable genes.
+2022-12-02 17:57:30 Estimating contamination parameters...
+  |                                                                              |                                                                      |   0%  |                                                                              |============                                                          |  17%  |                                                                              |=======================                                               |  33%  |                                                                              |===================================                                   |  50%  |                                                                              |===============================================                       |  67%  |                                                                              |==========================================================            |  83%  |                                                                              |======================================================================| 100%
+2022-12-02 18:00:43 Decontaminating genes ...
+
+Iteration: 1
+Log-likelihood: 15101304.396
+Max difference of decontaminated expressions: 513.256
+
+Iteration: 2
+Log-likelihood: 15277574.923
+Max difference of decontaminated expressions: 201.753
+
+Iteration: 3
+Log-likelihood: 15330367.592
+Max difference of decontaminated expressions: 88.79
+
+Iteration: 4
+Log-likelihood: 15352440.834
+Max difference of decontaminated expressions: 44.506
+
+Iteration: 5
+Log-likelihood: 15363561.147
+Max difference of decontaminated expressions: 24.847
+
+Iteration: 6
+Log-likelihood: 15369857.217
+Max difference of decontaminated expressions: 15.087
+
+Iteration: 7
+Log-likelihood: 15373723.418
+Max difference of decontaminated expressions: 9.789
+
+Iteration: 8
+Log-likelihood: 15376244.005
+Max difference of decontaminated expressions: 6.702
+
+Iteration: 9
+Log-likelihood: 15377964.551
+Max difference of decontaminated expressions: 4.794
+
+Iteration: 10
+Log-likelihood: 15379182.487
+Max difference of decontaminated expressions: 3.555
+
+Iteration: 11
+Log-likelihood: 15380070.502
+Max difference of decontaminated expressions: 2.715
+
+Iteration: 12
+Log-likelihood: 15380734.059
+Max difference of decontaminated expressions: 2.124
+
+Iteration: 13
+Log-likelihood: 15381240.296
+Max difference of decontaminated expressions: 1.695
+
+Iteration: 14
+Log-likelihood: 15381633.457
+Max difference of decontaminated expressions: 1.375
+
+Iteration: 15
+Log-likelihood: 15381943.566
+Max difference of decontaminated expressions: 1.132
+
+Iteration: 16
+Log-likelihood: 15382191.521
+Max difference of decontaminated expressions: 0.943
+Parameter converged.
+
+2022-12-02 18:01:47 Scaling genes...
+2022-12-02 18:01:47 All finished.
