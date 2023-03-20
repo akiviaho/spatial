@@ -1,0 +1,104 @@
+import os
+os.chdir('/lustre/scratch/kiviaho/prostate_spatial')
+
+import scanpy as sc
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+
+
+os.environ["THEANO_FLAGS"] = 'device=cuda,floatX=float32,force_device=True'
+import cell2location
+
+from matplotlib import rcParams
+rcParams['pdf.fonttype'] = 42 # enables correct plotting of text for PDFs
+
+from utils import load_from_pickle
+
+results_folder = './c2l-results/'
+# create paths and names to results folders for reference regression and cell2location models
+ref_run_name = results_folder + 'reference_signatures'
+run_name = results_folder + 'cell2location_map_20230320'
+
+
+
+if __name__ == '__main__':
+
+    # Load the single-cell cell type reference: export estimated expression in 'cell type'
+    adata_ref = sc.read_h5ad('/lustre/scratch/kiviaho/prostate_spatial/c2l-results/reference_signatures.h5ad')
+
+    if 'means_per_cluster_mu_fg' in adata_ref.varm.keys():
+        inf_aver = adata_ref.varm['means_per_cluster_mu_fg'][[f'means_per_cluster_mu_fg_{i}'
+                                        for i in adata_ref.uns['mod']['factor_names']]].copy()
+    else:
+        inf_aver = adata_ref.var[[f'means_per_cluster_mu_fg_{i}'
+                                        for i in adata_ref.uns['mod']['factor_names']]].copy()
+    inf_aver.columns = adata_ref.uns['mod']['factor_names']
+    
+    del adata_ref
+
+
+    # Load visium data and set it up properly (raw, unnormalized counts)
+    adata_vis_individually = load_from_pickle('./data/individual_sections_normalized_clustered.pickle')
+    adata_vis = sc.concat(adata_vis_individually)
+    del adata_vis_individually
+    
+    # find shared genes and subset both anndata and reference signatures
+    intersect = np.intersect1d(adata_vis.var_names, inf_aver.index)
+    adata_vis = adata_vis[:, intersect].copy()
+    inf_aver = inf_aver.loc[intersect, :].copy()
+
+    # prepare anndata for cell2location model
+    cell2location.models.Cell2location.setup_anndata(adata=adata_vis,
+                                                      batch_key='sample_id',
+                                                      layer='counts')
+
+    # create and train the model
+    mod = cell2location.models.Cell2location(
+        adata_vis, cell_state_df=inf_aver,
+        # the expected average cell abundance: tissue-dependent
+        # hyper-prior which can be estimated from paired histology:
+        N_cells_per_location=10,
+        # hyperparameter controlling normalisation of
+        # within-experiment variation in RNA detection:
+        detection_alpha=20
+    )
+    mod.view_anndata_setup()
+
+    # Train the model
+    mod.train(max_epochs=30000,
+          # train using full data (batch_size=None)
+          batch_size=None,
+          # use all data points in training because
+          # we need to estimate cell abundance at all locations
+          train_size=1,
+          use_gpu=True,
+         )
+
+    # In this section, we export the estimated cell abundance (summary of the posterior distribution).
+    adata_vis = mod.export_posterior(
+        adata_vis, sample_kwargs={'num_samples': 1000, 'batch_size': mod.adata.n_obs, 'use_gpu': True}
+    )
+
+    # Save anndata object with results
+    adata_file = run_name + '/visium_adata_with_c2l_mapping.h5ad'
+    adata_vis.write(adata_file)
+    adata_file
+
+
+    # Save model
+    mod.save(run_name, overwrite=True)
+
+
+    ## PLOTTING ##
+    # plot ELBO loss history during training, removing first 100 epochs from the plot
+    mod.plot_history(1000)
+    plt.legend(labels=['full data training'])
+    plt.savefig('c2l_mapping_model_training_ELBO.png')
+    plt.clf()
+
+
+    mod.plot_QC()
+    plt.savefig('c2l_mapping_qc_plot.png')
+    plt.clf()
+
