@@ -1,5 +1,4 @@
 import os
-# This is redundant if working in a singularity container
 os.chdir('/lustre/scratch/kiviaho/prostate_spatial')
 
 import scanpy as sc
@@ -17,13 +16,14 @@ rcParams['pdf.fonttype'] = 42 # enables correct plotting of text for PDFs
 
 if __name__ == '__main__':
     
-    results_folder = './c2l-results/'
+    #########
+    # Change these paths when re-running
+    results_folder = './c2l-results/cell2location_map_20230322'
+    adata_ref = sc.read_h5ad('./single-cell-reference-with-revised-cell-types-20230322.h5ad')
+    ########
 
     # create paths and names to results folders for reference regression and cell2location models
     ref_run_name = results_folder + 'reference_signatures'
-    run_name = results_folder + './c2l-results/cell2location_map'
-
-    adata_ref = sc.read_h5ad('./single-cell-reference-with-cell-types.h5ad')
 
     # prepare anndata for the regression model
     cell2location.models.RegressionModel.setup_anndata(adata=adata_ref,
@@ -58,10 +58,10 @@ if __name__ == '__main__':
     adata_file
 
     mod.plot_history(20)
-    plt.savefig('c2l_single_cell_reference_training_history.png')
+    plt.savefig(results_folder+'c2l_single_cell_reference_training_history.png')
     plt.clf()
 
 
     mod.plot_QC()
-    plt.savefig('c2l_qc_plot.png')
+    plt.savefig(results_folder+'c2l_qc_plot.png')
     plt.clf()

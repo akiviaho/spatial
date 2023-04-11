@@ -24,11 +24,11 @@ def qc_and_normalize(adata):
     import scib
     # normalize and calculate leiden clustering
     sc.pp.filter_genes(adata, min_cells=5)
-    sc.pp.filter_cells(adata, min_counts=500)
+    sc.pp.filter_cells(adata, min_counts=500) 
     scib.preprocessing.normalize(adata,precluster=False)
     return adata
 
-def spatially_aware_clustering(adata,proximity_weight=0.2,res=0.8):
+def spatially_aware_clustering(adata,proximity_weight=0.3,res=1.0):
     import squidpy as sq
     # Define the joint adjacency weighting
     sc.pp.scale(adata)

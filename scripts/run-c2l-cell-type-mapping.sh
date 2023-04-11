@@ -1,15 +1,15 @@
 #!/bin/bash
 #SBATCH -t 1-23:59:00
-#SBATCH -J c2l-infer
-#SBATCH -o c2l-infer.out.%j
-#SBATCH -e c2l-infer.err.%j
+#SBATCH -J c2l-map
+#SBATCH -o c2l-map.out.%j
+#SBATCH -e c2l-map.err.%j
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:teslav100:1
 # #SBATCH --nodelist=nag16
 #SBATCH --exclude=meg[10-12],nag[01-09]
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=6
-#SBATCH --mem=200G
+#SBATCH --mem=60G
 #SBATCH --mail-type=END
 #SBATCH --mail-user=antti.kiviaho@tuni.fi
 

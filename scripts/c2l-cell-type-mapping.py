@@ -16,16 +16,17 @@ rcParams['pdf.fonttype'] = 42 # enables correct plotting of text for PDFs
 from utils import load_from_pickle
 
 results_folder = './c2l-results/'
+date = '20230322'
 # create paths and names to results folders for reference regression and cell2location models
 ref_run_name = results_folder + 'reference_signatures'
-run_name = results_folder + 'cell2location_map_20230320'
+run_name = results_folder + 'cell2location_map_'+ date
 
 
 
 if __name__ == '__main__':
 
     # Load the single-cell cell type reference: export estimated expression in 'cell type'
-    adata_ref = sc.read_h5ad('/lustre/scratch/kiviaho/prostate_spatial/c2l-results/reference_signatures.h5ad')
+    adata_ref = sc.read_h5ad('/lustre/scratch/kiviaho/prostate_spatial/c2l-results/cell2location_map_20230322/sc_reference_signatures_20230322.h5ad')
 
     if 'means_per_cluster_mu_fg' in adata_ref.varm.keys():
         inf_aver = adata_ref.varm['means_per_cluster_mu_fg'][[f'means_per_cluster_mu_fg_{i}'
@@ -81,7 +82,7 @@ if __name__ == '__main__':
     )
 
     # Save anndata object with results
-    adata_file = run_name + '/visium_adata_with_c2l_mapping.h5ad'
+    adata_file = 'visium_adata_with_c2l_mapping_'+date+'.h5ad'
     adata_vis.write(adata_file)
     adata_file
 
@@ -94,11 +95,11 @@ if __name__ == '__main__':
     # plot ELBO loss history during training, removing first 100 epochs from the plot
     mod.plot_history(1000)
     plt.legend(labels=['full data training'])
-    plt.savefig('c2l_mapping_model_training_ELBO.png')
+    plt.savefig('c2l_mapping_model_training_ELBO_'+date+'.png')
     plt.clf()
 
 
     mod.plot_QC()
-    plt.savefig('c2l_mapping_qc_plot.png')
+    plt.savefig('c2l_mapping_qc_plot_'+date+'.png')
     plt.clf()
 
