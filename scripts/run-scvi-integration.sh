@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH -t 1-23:59:00
-#SBATCH -J spatial-scvi
-#SBATCH -o spatial-scvi.out.%j
-#SBATCH -e spatial-scvi.err.%j
+#SBATCH -J reference-scvi
+#SBATCH -o reference-scvi.out.%j
+#SBATCH -e reference-scvi.err.%j
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:teslav100:1
 # #SBATCH --nodelist=nag16
@@ -21,4 +21,4 @@ module load anaconda
 source activate scib-pipeline-R4.0
 echo "conda activated"
 
-python -u ./scripts/spatial-scvi-integrate.py
+python -u ./scripts/scvi-integrate-sc-reference.py

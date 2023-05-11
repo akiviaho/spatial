@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 # Date: 27.2.2023
 #
 # A script for running scvi integration on single cell datasets
-# Dong 2020, Chen 2021, Cheng 2022, Chen 2022, Song 2022, Hirz 2023
+# Dong 2020, Chen 2021, Cheng 2022, Chen 2022, Song 2022, Wong 2022, Hirz 2023
 
 if __name__ == "__main__":
 
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     ###############
 
     # Load the data
-    adata = load_from_pickle('./sc-reference/normalized_sc_6_datasets_with_annot.pickle')
+    adata = load_from_pickle('./sc-reference/normalized_sc_7_datasets_with_annot.pickle')
     adata = ad.concat(adata)
     adata.obs_names_make_unique() # Some duplicate index persists
 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     sc.tl.leiden(adata, key_added="VI_clusters")
     print('NN graph, UMAP & Leiden ready...')
 
-    save_to_pickle(adata,prefix+'-scvi-integrated-6-sc-datasets.pickle')
+    save_to_pickle(adata,prefix+'-scvi-integrated-7-sc-datasets.pickle')
     print('SCVI integration saved...')
 
     #### EXTEND TO SCANVI (use harmonized annotations) ####
@@ -79,6 +79,6 @@ if __name__ == "__main__":
     sc.tl.leiden(adata, key_added="ANVI_clusters")
     print('NN graph, UMAP & Leiden ready...')
 
-    save_to_pickle(adata,prefix+'-scANVI-integrated-6-sc-datasets.pickle')
+    save_to_pickle(adata,prefix+'-scANVI-integrated-7-sc-datasets.pickle')
     print('scANVI integration saved...')
 

@@ -5,11 +5,11 @@
 #SBATCH -e c2l-map.err.%j
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:teslav100:1
-# #SBATCH --nodelist=nag16
-#SBATCH --exclude=meg[10-12],nag[01-09]
+#SBATCH --nodelist=nag[10-11],nag[15-18]
+# #SBATCH --exclude=meg[10-12],nag[01-09]
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=6
-#SBATCH --mem=60G
+#SBATCH --mem=100G
 #SBATCH --mail-type=END
 #SBATCH --mail-user=antti.kiviaho@tuni.fi
 

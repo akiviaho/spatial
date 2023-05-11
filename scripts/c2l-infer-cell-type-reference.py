@@ -17,21 +17,36 @@ rcParams['pdf.fonttype'] = 42 # enables correct plotting of text for PDFs
 if __name__ == '__main__':
     
     #########
+
+    # Change model setup in terms of layer & labels !
+
     # Change these paths when re-running
-    results_folder = './c2l-results/cell2location_map_20230322'
-    adata_ref = sc.read_h5ad('./single-cell-reference-with-revised-cell-types-20230322.h5ad')
+    results_folder = './c2l-results/cell2location_map_20230511/'
+    adata_ref_path = sc.read_h5ad('./single-cell-reference-with-nmf-derived-annotations-20230511.h5ad')
     ########
 
     # create paths and names to results folders for reference regression and cell2location models
-    ref_run_name = results_folder + 'reference_signatures'
+    ref_run_name = results_folder + 'reference_signatures/'
+
+
+    # Check if paths exist, and create them if not
+    if not os.path.exists(results_folder):
+        os.makedirs(results_folder)
+    if not os.path.exists(ref_run_name):
+        os.makedirs(ref_run_name)
+
+    if not os.path.exists(adata_ref_path):
+        raise FileNotFoundError("The adata_ref_path file is not found.")
+
+    adata_ref = sc.read_h5ad(adata_ref_path)  
 
     # prepare anndata for the regression model
     cell2location.models.RegressionModel.setup_anndata(adata=adata_ref,
-                            layer='counts',
+                        #    layer='counts',
                             # 10X reaction / sample / batch
                             batch_key='dataset',
                             # cell type, covariate used for constructing signatures
-                            labels_key='detailed_celltypes',
+                            labels_key='final_annotation',
                             categorical_covariate_keys=['sample']
                         )
 
