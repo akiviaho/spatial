@@ -16,5 +16,5 @@ source activate scib-pipeline-R4.0
 echo "conda activated"
 
 python -u ./scripts/nmf-on-celltype.py \
---filename B_cell.h5ad \
---n_var_genes 1000
+--filename Myeloid.h5ad \
+--n_var_genes 2000

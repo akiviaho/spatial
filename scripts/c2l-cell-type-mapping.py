@@ -16,7 +16,7 @@ rcParams['pdf.fonttype'] = 42 # enables correct plotting of text for PDFs
 from utils import load_from_pickle
 
 results_folder = './c2l-results/'
-date = '20230511'
+date = '20230519'
 # create paths and names to results folders for reference regression and cell2location models
 ref_run_name = results_folder + 'reference_signatures/'
 run_name = results_folder + 'cell2location_map_'+ date + '/'
@@ -26,7 +26,7 @@ run_name = results_folder + 'cell2location_map_'+ date + '/'
 if __name__ == '__main__':
 
     # Load the single-cell cell type reference: export estimated expression in 'cell type'
-    adata_ref = sc.read_h5ad('c2l-results/cell2location_map_20230511/reference_signatures/sc_reference_signatures.h5ad')
+    adata_ref = sc.read_h5ad('c2l-results/cell2location_map_20230519/reference_signatures/sc_reference_signatures.h5ad')
 
     if 'means_per_cluster_mu_fg' in adata_ref.varm.keys():
         inf_aver = adata_ref.varm['means_per_cluster_mu_fg'][[f'means_per_cluster_mu_fg_{i}'
@@ -59,7 +59,7 @@ if __name__ == '__main__':
         adata_vis, cell_state_df=inf_aver,
         # the expected average cell abundance: tissue-dependent
         # hyper-prior which can be estimated from paired histology:
-        N_cells_per_location=10,
+        N_cells_per_location=21,
         # hyperparameter controlling normalisation of
         # within-experiment variation in RNA detection:
         detection_alpha=20

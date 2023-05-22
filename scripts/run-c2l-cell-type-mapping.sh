@@ -8,8 +8,8 @@
 #SBATCH --nodelist=nag[10-11],nag[15-18]
 # #SBATCH --exclude=meg[10-12],nag[01-09]
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=6
-#SBATCH --mem=100G
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=80G
 #SBATCH --mail-type=END
 #SBATCH --mail-user=antti.kiviaho@tuni.fi
 

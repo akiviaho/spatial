@@ -21,8 +21,8 @@ if __name__ == '__main__':
     # Change model setup in terms of layer & labels !
 
     # Change these paths when re-running
-    results_folder = './c2l-results/cell2location_map_20230511/'
-    adata_ref_path = sc.read_h5ad('./single-cell-reference-with-nmf-derived-annotations-20230511.h5ad')
+    results_folder = './c2l-results/cell2location_map_20230519/'
+    adata_ref_path = './single-cell-reference-with-nmf-derived-annotations-20230519.h5ad'
     ########
 
     # create paths and names to results folders for reference regression and cell2location models
@@ -34,9 +34,6 @@ if __name__ == '__main__':
         os.makedirs(results_folder)
     if not os.path.exists(ref_run_name):
         os.makedirs(ref_run_name)
-
-    if not os.path.exists(adata_ref_path):
-        raise FileNotFoundError("The adata_ref_path file is not found.")
 
     adata_ref = sc.read_h5ad(adata_ref_path)  
 
