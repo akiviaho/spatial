@@ -54,6 +54,9 @@ if __name__ == '__main__':
                                                       batch_key='sample_id',
                                                       layer='counts')
 
+    print('adata_vis prior to training:')
+    adata_vis
+
     # create and train the model
     mod = cell2location.models.Cell2location(
         adata_vis, cell_state_df=inf_aver,
@@ -67,7 +70,7 @@ if __name__ == '__main__':
     mod.view_anndata_setup()
 
     # Train the model
-    mod.train(max_epochs=30000,
+    mod.train(max_epochs=45000,
           # train using full data (batch_size=None)
           batch_size=None,
           # use all data points in training because
@@ -89,7 +92,6 @@ if __name__ == '__main__':
 
     # Save model
     mod.save(run_name, overwrite=True)
-
 
     ## PLOTTING ##
     # plot ELBO loss history during training, removing first 100 epochs from the plot
