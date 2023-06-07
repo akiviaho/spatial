@@ -32,13 +32,13 @@ def calculate_matrix_orders(arr):
 
 ### Params ###
 parser = argparse.ArgumentParser()
-parser.add_argument('--filename', type=str, default='Fibroblast.h5ad', help='Name of the file to be used')
-parser.add_argument('--n_var_genes', type=int,default=1000, help='The target number of HVGs')
+parser.add_argument('--filename', type=str, help='Name of the file to be used')
+parser.add_argument('--n_var_genes', type=int,default=2000, help='The target number of HVGs')
 args = parser.parse_args()
 
 filename = args.filename
 n_var_genes = args.n_var_genes
-n_comps_range =  np.arange(2,16)
+n_comps_range =  np.arange(5,26)
 
 path_for_plots = 'sc_modules/plots/'
 path_for_data = 'sc_modules/data/'

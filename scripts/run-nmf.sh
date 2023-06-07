@@ -6,7 +6,7 @@
 #SBATCH --partition=normal
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=20G
+#SBATCH --mem=100G
 #SBATCH --mail-type=END
 #SBATCH --mail-user=antti.kiviaho@tuni.fi
 
