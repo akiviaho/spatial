@@ -5,12 +5,11 @@
 #SBATCH -e reference-scvi.err.%j
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:teslav100:1
-# #SBATCH --nodelist=nag16
 #SBATCH --exclude=meg[10-12],nag[01-09]
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=6
+#SBATCH --cpus-per-task=1
 #SBATCH --mem=200G
-#SBATCH --mail-type=END
+#SBATCH --mail-type=ALL
 #SBATCH --mail-user=antti.kiviaho@tuni.fi
 
 module load CUDA/11.2

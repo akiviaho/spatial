@@ -7,6 +7,7 @@ import seaborn as sns
 import torch
 import os
 from matplotlib import pyplot as plt
+from datetime import datetime
 
 # Author: Antti Kiviaho
 # Date: 27.2.2023
@@ -18,7 +19,8 @@ if __name__ == "__main__":
 
     ##############    
     # Some params
-    prefix = ''
+
+    current_date = datetime.today().strftime('%Y%m%d')
     filter_celltypes = False
     which_cells = ['']
 
@@ -38,7 +40,9 @@ if __name__ == "__main__":
     scib.preprocessing.scale_batch(adata,batch='dataset')
     print('Scaling done...')
 
-    hvg_list = scib.preprocessing.hvg_batch(adata,batch_key='dataset',target_genes=2000,flavor='seurat',adataOut=False)
+    adata.raw = adata
+
+    adata = scib.preprocessing.hvg_batch(adata,batch_key='dataset',target_genes=2000,flavor='seurat',adataOut=True)
     print('HVGs calculated...')
 
     print('CUDA is available: ' + str(torch.cuda.is_available()))
@@ -50,7 +54,7 @@ if __name__ == "__main__":
 
     vae.train(use_gpu=True)
 
-    vae.save(prefix+'-scvi-model')
+    vae.save('scvi_model_'+current_date)
     adata.obsm["X_scVI"] = vae.get_latent_representation()
 
     sc.pp.neighbors(adata, use_rep="X_scVI",random_state=745634)
@@ -58,11 +62,11 @@ if __name__ == "__main__":
     sc.tl.leiden(adata, key_added="VI_clusters")
     print('NN graph, UMAP & Leiden ready...')
 
-    save_to_pickle(adata,prefix+'-scvi-integrated-7-sc-datasets.pickle')
+    save_to_pickle(adata,'scvi_integrated_7_sc_datasets_'+current_date+'.pickle')
     print('SCVI integration saved...')
 
     #### EXTEND TO SCANVI (use harmonized annotations) ####
-
+""" 
     lvae = scvi.model.SCANVI.from_scvi_model(
     vae,
     adata=adata,
@@ -82,3 +86,4 @@ if __name__ == "__main__":
     save_to_pickle(adata,prefix+'-scANVI-integrated-7-sc-datasets.pickle')
     print('scANVI integration saved...')
 
+ """
