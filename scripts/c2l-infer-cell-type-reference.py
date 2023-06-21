@@ -21,8 +21,8 @@ if __name__ == '__main__':
     # Change model setup in terms of layer & labels !
 
     # Change these paths when re-running
-    results_folder = './c2l-results/cell2location_map_20230519/'
-    adata_ref_path = './single-cell-reference-with-nmf-derived-annotations-20230519.h5ad'
+    results_folder = './c2l-results/cell2location_map_20230621/'
+    adata_ref_path = './single_cell_reference_with_nmf_derived_annotations_20230621.h5ad'
     ########
 
     # create paths and names to results folders for reference regression and cell2location models
@@ -74,6 +74,6 @@ if __name__ == '__main__':
     plt.clf()
 
 
-    mod.plot_QC()
-    plt.savefig(results_folder+'c2l_qc_plot.png')
-    plt.clf()
+#    mod.plot_QC()
+#    plt.savefig(results_folder+'c2l_qc_plot.png')
+#    plt.clf()

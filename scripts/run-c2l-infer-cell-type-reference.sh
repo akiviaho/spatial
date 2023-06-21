@@ -6,7 +6,6 @@
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:teslav100:1
 # #SBATCH --nodelist=nag16
-#SBATCH --exclude=meg[10-12],nag[01-09]
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=6
 #SBATCH --mem=100G
