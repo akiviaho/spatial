@@ -16,7 +16,7 @@ def save_to_pickle(obj,filename):
 def nmf_preprocessing(dat,n_var_genes=2000):
 
     dat.X = dat.layers['counts'].copy()
-    sc.pp.filter_genes(dat,min_counts=1)
+    sc.pp.filter_genes(dat,min_counts=10)
     sc.pp.normalize_total(dat)
     sc.pp.scale(dat)
     sc.pp.highly_variable_genes(dat,n_top_genes=n_var_genes,flavor='seurat_v3',
@@ -192,12 +192,6 @@ if __name__ == '__main__':
                 adj_matrix[list(gene_overlaps.keys()).index(gene1)][list(gene_overlaps.keys()).index(gene2)] += 1
 
     adj_df = pd.DataFrame(adj_matrix,columns=list(gene_overlaps.keys()),index=list(gene_overlaps.keys()))
-
-    # Filter connections occurring in fewer than 2 modules
-    adj_df = adj_df[adj_df.max(axis=1) >= 2]
-
-    # Filter rows with more than 3 non-zero entries
-    adj_df = adj_df[adj_df.astype(bool).sum(axis=1) >= 3]
 
     # Save the adjacency matrix to a csv
     save_file = filename.replace('.h5ad','_nmf_derived_gene_adjacencies.csv')

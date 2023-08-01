@@ -16,9 +16,8 @@ rcParams['pdf.fonttype'] = 42 # enables correct plotting of text for PDFs
 from utils import load_from_pickle
 
 results_folder = './c2l-results/'
-date = '20230519'
+date = '20230721'
 # create paths and names to results folders for reference regression and cell2location models
-ref_run_name = results_folder + 'reference_signatures/'
 run_name = results_folder + 'cell2location_map_'+ date + '/'
 
 
@@ -26,7 +25,7 @@ run_name = results_folder + 'cell2location_map_'+ date + '/'
 if __name__ == '__main__':
 
     # Load the single-cell cell type reference: export estimated expression in 'cell type'
-    adata_ref = sc.read_h5ad('c2l-results/cell2location_map_20230519/reference_signatures/sc_reference_signatures.h5ad')
+    adata_ref = sc.read_h5ad('c2l-results/cell2location_map_20230721/reference_signatures/sc_reference_signatures.h5ad')
 
     if 'means_per_cluster_mu_fg' in adata_ref.varm.keys():
         inf_aver = adata_ref.varm['means_per_cluster_mu_fg'][[f'means_per_cluster_mu_fg_{i}'
@@ -40,7 +39,7 @@ if __name__ == '__main__':
 
 
     # Load visium data and set it up properly (raw, unnormalized counts)
-    adata_vis_individually = load_from_pickle('./data/individual_sections_normalized_clustered.pickle')
+    adata_vis_individually = load_from_pickle('./data/clustered_visium_data.pickle')
     adata_vis = sc.concat(adata_vis_individually)
     del adata_vis_individually
     
@@ -70,9 +69,9 @@ if __name__ == '__main__':
     mod.view_anndata_setup()
 
     # Train the model
-    mod.train(max_epochs=45000,
+    mod.train(max_epochs=30000,
           # train using full data (batch_size=None)
-          batch_size=None,
+          batch_size=34000, # three batches
           # use all data points in training because
           # we need to estimate cell abundance at all locations
           train_size=1,
