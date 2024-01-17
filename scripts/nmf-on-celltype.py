@@ -56,12 +56,16 @@ def jaccard(list1, list2):
 parser = argparse.ArgumentParser()
 parser.add_argument('--filename', type=str, help='Name of the file to be used')
 parser.add_argument('--n_var_genes', type=int,default=2000, help='The target number of HVGs')
+parser.add_argument('--min_genes_in_initial_module', type=int,default=5, help='The number of genes required in the initial NMF module')
+parser.add_argument('--required_jaccard_index', type=float,default=0.05, help='The required Jaccard overlap for two gene modules')
 args = parser.parse_args()
 
 filename = args.filename
 n_hvgs = args.n_var_genes
+min_genes_in_initial_module = args.min_genes_in_initial_module
+required_jaccard_index = args.required_jaccard_index
 min_cells = 100
-nmf_comp_range = np.arange(5,26)[::-1]
+nmf_comp_range = np.arange(5,11)[::-1] # Changed in the latest run
 
 if __name__ == '__main__':
 
@@ -119,15 +123,15 @@ if __name__ == '__main__':
                     genes_by_factors['factor'+str(factor)] = valid_genes
 
                 
-                all_lists_have_at_least_five = True
+                all_lists_have_at_least = True
 
                 for lst in genes_by_factors.values():
-                    if len(lst) < 5:
-                        all_lists_have_at_least_five = False
+                    if len(lst) < min_genes_in_initial_module:
+                        all_lists_have_at_least = False
                         break
 
-                if all_lists_have_at_least_five:
-                    print(s+": valid factors (min. 5 genes) when using n_comps="+str(n_comps))
+                if all_lists_have_at_least:
+                    print(s+": valid factors (min. "+str(min_genes_in_initial_module)+" genes) when using n_comps="+str(n_comps))
                     nmf_sample_dict[s] = genes_by_factors
                     break
         else:
@@ -149,7 +153,7 @@ if __name__ == '__main__':
         # Calculate the Jaccard index of the two lists
         jaccard_index = jaccard(nmf_sample_dict[sample1][factor1], nmf_sample_dict[sample2][factor2])
         # If the overlap is more than 5%, add it to the overlapping_factors dictionary
-        if jaccard_index > 0.05:
+        if jaccard_index > required_jaccard_index:
             overlapping_factors.setdefault((sample1, factor1), set()).add((sample2, factor2))
             
     # A set to keep track of factors with more than two overlaps
@@ -157,7 +161,7 @@ if __name__ == '__main__':
 
     # Go through each factor
     for key, value in overlapping_factors.items():
-        # If the factor overlaps with at least two other factors, add it to the valid_factors set
+        # If the factor overlaps with at least one other factors, add it to the valid_factors set
         if len(value) >= 2:
             valid_factors.add(key)
 
@@ -194,7 +198,9 @@ if __name__ == '__main__':
     adj_df = pd.DataFrame(adj_matrix,columns=list(gene_overlaps.keys()),index=list(gene_overlaps.keys()))
 
     # Save the adjacency matrix to a csv
-    save_file = filename.replace('.h5ad','_nmf_derived_gene_adjacencies.csv')
+    save_file = filename.replace('.h5ad','_nmf_derived_gene_adjacencies_mod_'+
+                                 str(min_genes_in_initial_module)+'_jac'
+                                 +str(required_jaccard_index)+'.csv')
     adj_df.to_csv(save_file)
 
 

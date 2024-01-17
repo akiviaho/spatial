@@ -13,7 +13,8 @@ from datetime import datetime
 # Date: 27.2.2023
 #
 # A script for running scvi integration on single cell datasets
-# Dong 2020, Chen 2021, Cheng 2022, Chen 2022, Song 2022, Wong 2022, Hirz 2023
+# Henry 2018, Dong 2020, Chen 2021, Cheng 2022, Chen 2022, Song 2022, Wong 2022, Hirz 2023
+
 
 if __name__ == "__main__":
 
@@ -21,24 +22,39 @@ if __name__ == "__main__":
     # Some params
 
     current_date = datetime.today().strftime('%Y%m%d')
-    filter_celltypes = False
-    which_cells = ['']
+    # Add a technology column:
+    chemistry_version = {'henry_2018':'chromium_v2','dong_2020':'chromium_v2',
+                         'chen_2021':'chromium_v2','cheng_2022':'chromium_v2',
+                         'chen_2022':'chromium_v2','song_2022':'seq_well3',
+                         'wong_2022':'chromium_v1','hirz_2023':'chromium_v2'}
+    
 
     ###############
 
     # Load the data
-    adata = load_from_pickle('./sc-reference/normalized_sc_7_datasets_with_annot.pickle')
+    adata = load_from_pickle('./sc-reference/normalized_sc_8_datasets.pickle')
+
+    # Updated for 8 datasets. Run this before concatenation (error fix)
+    subs = adata['henry_2018'].copy()
+    subs.var_names_make_unique()
+    del subs.raw
+    adata['henry_2018'] = subs.copy()
+    
+    # Downsample Hirz to 50k stop it from dominating the integration
+    adata['hirz_2023'] = adata['hirz_2023'][adata['hirz_2023'].obs.sample(int(5e4),
+    random_state=934537).index]
+
     adata = ad.concat(adata)
     adata.obs_names_make_unique() # Some duplicate index persists
 
-    if filter_celltypes:
-        adata = adata[adata.obs['broad_celltypes'].isin(which_cells)]
-
-
     # Preprocess and scale
     adata.obs.dataset = adata.obs.dataset.astype('category')
-    scib.preprocessing.scale_batch(adata,batch='dataset')
+    scib.preprocessing.scale_batch(adata,batch='dataset') # https://doi.org/10.1038/s41592-021-01336-8
+
     print('Scaling done...')
+
+    # Map chemistry version according to the dataset
+    adata.obs['chemistry_version'] = adata.obs['dataset'].map(chemistry_version).astype('category')
 
     adata.raw = adata
 
@@ -49,7 +65,7 @@ if __name__ == "__main__":
     print('GPUs available: ' + str(torch.cuda.device_count()))
 
     print('Initiating training on GPU ...')
-    scvi.model.SCVI.setup_anndata(adata, layer="counts", batch_key="dataset")
+    scvi.model.SCVI.setup_anndata(adata, layer="counts", batch_key="dataset",categorical_covariate_keys=['chemistry_version'])
     vae = scvi.model.SCVI(adata, n_layers=2, n_latent=30, gene_likelihood="nb")
 
     vae.train(use_gpu=True)
@@ -62,7 +78,7 @@ if __name__ == "__main__":
     sc.tl.leiden(adata, key_added="VI_clusters")
     print('NN graph, UMAP & Leiden ready...')
 
-    save_to_pickle(adata,'scvi_integrated_7_sc_datasets_'+current_date+'.pickle')
+    save_to_pickle(adata,'scvi_integrated_8_sc_datasets_'+current_date+'.pickle')
     print('SCVI integration saved...')
 
     #### EXTEND TO SCANVI (use harmonized annotations) ####

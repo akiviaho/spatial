@@ -5,7 +5,7 @@
 #SBATCH -e reference-scvi.err.%j
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:teslav100:1
-#SBATCH --exclude=meg[10-12],nag[01-09]
+# #SBATCH --exclude=meg[10-12],nag[01-09]
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=200G

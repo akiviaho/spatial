@@ -16,4 +16,4 @@
 module load anaconda
 source activate infercnvpy
 
-python -u ./single-cell-infercnv.py
+python -u ./scripts/single-cell-infercnv.py

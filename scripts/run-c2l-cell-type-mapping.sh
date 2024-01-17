@@ -11,6 +11,7 @@
 #SBATCH --mem=200G
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=antti.kiviaho@tuni.fi
+# #SBATCH --dependency=afterok:25621333
 
 module load CUDA/11.2
 echo "CUDA loaded"

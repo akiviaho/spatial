@@ -18,16 +18,19 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Define functions
-def get_spot_interfaces(dat, cluster_of_interest, interaction_cluster, annotation_key = 'tissue_region',added_key='proximity_analysis'):
+
+# Define functions
+def get_spot_interfaces(dat, cluster_of_interest, interaction_cluster, annotation_key = 'predicted_region',added_key='proximity_analysis'):
+    # Modified on 31.10. to make the interface subsetting work both ways
 
     # Create an observation column for spatial segmentation
-    dat.obs[added_key] = 'Background'
+    dat.obs[added_key] = np.nan
     distance_mat = dat.obsp['spatial_distances'].todense()
 
     for idx, obs_name in enumerate(dat.obs_names):
         cl = dat.obs[annotation_key][idx]
 
-        if cl == cluster_of_interest:
+        if cl in [cluster_of_interest,interaction_cluster]:
 
             first_nhbor_idxs = np.where(distance_mat[:,idx]==1.0)[0] # Get first-term neighbor indices
 
@@ -35,16 +38,22 @@ def get_spot_interfaces(dat, cluster_of_interest, interaction_cluster, annotatio
                 # If try fails, there are no matching clusters as keys in value_counts
                 n_cl_neighbors = dat[first_nhbor_idxs].obs[annotation_key].value_counts()[cl] # find first-term neighbor cluster annotations POSSIBLE ERROR IF CL NOT IN DICT
 
-                # Added this clause to control that only those with 'close' interactions with the interaction cluster are included. 
+                # Added this clause to control that only those with 'close' interactions with the interface cluster are included. 
                 all_nhbor_indices = np.where(distance_mat[:, idx] != 0)[0]
 
-                # Downgraded the number of required first neighbors to two
-                if (n_cl_neighbors >= 1) & (sum(dat.obs[annotation_key][all_nhbor_indices] == interaction_cluster) >= 3):
-                    dat.obs.at[obs_name,added_key] = cl
+                # Downgraded the number of required first neighbors to one
+                if cl == cluster_of_interest:
+                    if (n_cl_neighbors >= 0) & (sum(dat.obs[annotation_key][all_nhbor_indices] == interaction_cluster) >= 3):
+                        dat.obs.at[obs_name,added_key] = cl
+
+                elif cl == interaction_cluster:
+                    if (n_cl_neighbors >= 0) & (sum(dat.obs[annotation_key][all_nhbor_indices] == cluster_of_interest) >= 3):
+                        dat.obs.at[obs_name,added_key] = cl
+
 
             except:
                 continue
-
+    '''
     # Make a second loop to make sure the final cluster-of-interest annotations
     # are what's used to define proximal spots
     for idx, obs_name in enumerate(dat.obs_names):
@@ -58,13 +67,13 @@ def get_spot_interfaces(dat, cluster_of_interest, interaction_cluster, annotatio
             indices = np.where((dat.obs[added_key][all_nhbor_indices] != cl) & (dat.obs[annotation_key][all_nhbor_indices] == interaction_cluster))[0]
 
             # Update the 'proximity_analysis' column for the specific indices
-            dat.obs.loc[dat.obs_names[all_nhbor_indices[indices]], added_key] = 'Proximal ' + interaction_cluster
-
+            dat.obs.loc[dat.obs_names[all_nhbor_indices[indices]], added_key] = interaction_cluster
+    '''
     # Modify the colors to maintain the original cluster color
     dat.obs[added_key] = dat.obs[added_key].astype('category')
 
     return(dat)
-
+    
 if __name__ == '__main__':
 
 

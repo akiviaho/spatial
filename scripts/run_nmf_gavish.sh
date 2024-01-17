@@ -5,16 +5,14 @@
 #SBATCH -e Endothelial-nmf.err.%j
 #SBATCH --partition=normal
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=1
-#SBATCH --mem=30G
-#SBATCH --mail-type=END
-#SBATCH --mail-user=antti.kiviaho@tuni.fi
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=50G
 
 # load conda environment
 module load anaconda
 source activate scib-pipeline-R4.0
 echo "conda activated"
 
-python -u ./scripts/nmf-on-celltype.py \
---filename Endothelial.h5ad \
---n_var_genes 2000
+python -u ./scripts/nmf_on_celltype_gavish.py \
+--filename ./nmf_annotation/Endothelial.h5ad \
+--n_var_genes 2000 

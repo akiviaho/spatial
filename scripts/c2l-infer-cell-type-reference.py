@@ -21,8 +21,8 @@ if __name__ == '__main__':
     # Change model setup in terms of layer & labels !
 
     # Change these paths when re-running
-    results_folder = './c2l-results/cell2location_map_20230721/'
-    adata_ref_path = './single_cell_reference_with_nmf_derived_annotations_20230721.h5ad'
+    results_folder = './c2l-results/cell2location_map_20230908'
+    adata_ref_path = './single_cell_reference_with_nmf_derived_annotations_20230908.h5ad'
     ########
 
     # create paths and names to results folders for reference regression and cell2location models
