@@ -8,5 +8,5 @@ srun \
     --ntasks 1 \
     --cpus-per-task 8 \
     --time 12:00:00 \
-    bash -c "module load anaconda && source activate squidpy && python -u scripts/$filename"
+    bash -c "module load anaconda && source activate cell2loc_env && python -u $filename"
 

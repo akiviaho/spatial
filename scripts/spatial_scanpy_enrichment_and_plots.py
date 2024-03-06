@@ -7,7 +7,8 @@ import pandas as pd
 
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
-from utils import load_from_pickle, get_sample_ids, get_sample_ids, get_sample_crop_coords, save_to_pickle
+from tqdm import tqdm
+from utils import get_sample_ids_reorder, get_sample_crop_coords, save_to_pickle
 
 import seaborn as sns
 sns.set_theme(style='white')
@@ -16,7 +17,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-samples = get_sample_ids()
+samples = get_sample_ids_reorder()
 
 generate_plots = False
 
@@ -25,15 +26,15 @@ if __name__ == '__main__':
 
 ######### Scanpy scoring method ###########
 
-    # Re-download slides to get rid of the orig scores
-    adata_slides = load_from_pickle('./data/slides_with_cell_mapping_based_regions.pkl')
-    gene_set_df = pd.read_csv('./custom_gene_lists_encode_fixed.gmt',sep='\t',index_col=0,header=None).T
+
+    gene_set_df = pd.read_excel('custom_gene_lists.xlsx',header=None).drop(columns=0).set_index(1).T
+    #gene_set_df = pd.read_csv('./custom_gene_lists_encode_fixed.gmt',sep='\t',index_col=0,header=None).T
 
     custom_gene_set_scanpy_scores = {}
 
     # Calculate the scanpy scores for custom gene lists
-    for sample in samples:
-        slide = adata_slides[sample]
+    for sample in tqdm(samples, desc="Processing sample", unit="sample"):
+        slide = sc.read_h5ad('./data/visium_with_regions/'+sample+'_with_regions.h5ad')
 
         # Added a scaling step as it's recommended before scoring
         # !!! This is wrong: the function uses the 'raw' layer by default
@@ -42,7 +43,7 @@ if __name__ == '__main__':
 
         for col in gene_set_df.columns:
 
-            sc.tl.score_genes(slide,gene_set_df[col],score_name=col,random_state=2531035)
+            sc.tl.score_genes(slide,gene_set_df[col].dropna(),score_name=col,random_state=2531035)
 
         custom_gene_set_scanpy_scores[sample] = slide.obs[gene_set_df.columns].copy()
 
@@ -72,7 +73,7 @@ if __name__ == '__main__':
             for slide in adata_slides:
                 concat_obs = pd.concat([concat_obs,adata_slides[slide].obs.copy()],axis=0)
 
-            fig, axs = plt.subplots(5, 8, figsize=(24, 15),dpi=120)
+            fig, axs = plt.subplots(10, 5, figsize=(15, 30),dpi=120)
 
             min = concat_obs[var_to_plot].quantile(0.05)
             max = concat_obs[var_to_plot].quantile(0.95)
@@ -88,8 +89,8 @@ if __name__ == '__main__':
                 colormap = 'viridis'
 
 
-            for i in range(5):
-                for j in range(8):
+            for i in range(10):
+                for j in range(5):
                     
                     if it < len(samples):
                         sc.pl.spatial(adata_slides[samples[it]],color=var_to_plot,title=samples[it],

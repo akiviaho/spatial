@@ -10,18 +10,29 @@ import squidpy as sq
 
 from scipy.stats import fisher_exact
 import matplotlib.pyplot as plt
-from utils import load_from_pickle, save_to_pickle, get_sample_ids
-from matplotlib.backends.backend_pdf import PdfPages
-from itertools import permutations
+from utils import load_from_pickle, get_sample_ids_reorder, get_sample_crop_coords, get_sample_id_mask, save_to_pickle
+from statsmodels.stats.multitest import multipletests
+from itertools import combinations
+from sklearn.cluster import KMeans
+
+import seaborn as sns
+sns.set_theme(style='white')
 
 import warnings
 warnings.filterwarnings("ignore")
 
-# Define functions
+samples = get_sample_ids_reorder()
+sample_crop_coord = get_sample_crop_coords()
+sample_id_masks = get_sample_id_mask()
+
+
+## Define the target and the source
+source = 'Club epithelium'
+target = 'Muscle'
 
 # Define functions
-def get_spot_interfaces(dat, cluster_of_interest, interaction_cluster, annotation_key = 'predicted_region',added_key='proximity_analysis'):
-    # Modified on 31.10. to make the interface subsetting work both ways
+
+def get_spot_interfaces(dat, cluster_of_interest, interaction_cluster, annotation_key='predicted_region', added_key='proximity_analysis'):
 
     # Create an observation column for spatial segmentation
     dat.obs[added_key] = np.nan
@@ -30,141 +41,139 @@ def get_spot_interfaces(dat, cluster_of_interest, interaction_cluster, annotatio
     for idx, obs_name in enumerate(dat.obs_names):
         cl = dat.obs[annotation_key][idx]
 
-        if cl in [cluster_of_interest,interaction_cluster]:
-
-            first_nhbor_idxs = np.where(distance_mat[:,idx]==1.0)[0] # Get first-term neighbor indices
+        if cl in [cluster_of_interest, interaction_cluster]:
+            first_nhbor_idxs = np.where(distance_mat[:, idx] == 1.0)[0]  # Get first-term neighbor indices
 
             try:
-                # If try fails, there are no matching clusters as keys in value_counts
-                n_cl_neighbors = dat[first_nhbor_idxs].obs[annotation_key].value_counts()[cl] # find first-term neighbor cluster annotations POSSIBLE ERROR IF CL NOT IN DICT
-
-                # Added this clause to control that only those with 'close' interactions with the interface cluster are included. 
+                n_cl_neighbors = dat[first_nhbor_idxs].obs[annotation_key].value_counts()[cl]  # find first-term neighbor cluster annotations
                 all_nhbor_indices = np.where(distance_mat[:, idx] != 0)[0]
 
-                # Downgraded the number of required first neighbors to one
                 if cl == cluster_of_interest:
-                    if (n_cl_neighbors >= 0) & (sum(dat.obs[annotation_key][all_nhbor_indices] == interaction_cluster) >= 3):
-                        dat.obs.at[obs_name,added_key] = cl
+                    if (n_cl_neighbors >= 0) & (sum(dat.obs[annotation_key][all_nhbor_indices] == interaction_cluster) >= 2):
+                        dat.obs.at[obs_name, added_key] = cl
 
                 elif cl == interaction_cluster:
-                    if (n_cl_neighbors >= 0) & (sum(dat.obs[annotation_key][all_nhbor_indices] == cluster_of_interest) >= 3):
-                        dat.obs.at[obs_name,added_key] = cl
-
+                    if (n_cl_neighbors >= 0) & (sum(dat.obs[annotation_key][all_nhbor_indices] == cluster_of_interest) >= 2):
+                        dat.obs.at[obs_name, added_key] = cl
 
             except:
                 continue
-    '''
-    # Make a second loop to make sure the final cluster-of-interest annotations
-    # are what's used to define proximal spots
-    for idx, obs_name in enumerate(dat.obs_names):
-        cl = dat.obs[added_key][idx]
 
-        if cl == cluster_of_interest:
-            
-            all_nhbor_indices = np.where(distance_mat[:, idx] != 0)[0] 
-
-            # Get the indices where neighboring spots are not the interest cluster 
-            indices = np.where((dat.obs[added_key][all_nhbor_indices] != cl) & (dat.obs[annotation_key][all_nhbor_indices] == interaction_cluster))[0]
-
-            # Update the 'proximity_analysis' column for the specific indices
-            dat.obs.loc[dat.obs_names[all_nhbor_indices[indices]], added_key] = interaction_cluster
-    '''
     # Modify the colors to maintain the original cluster color
     dat.obs[added_key] = dat.obs[added_key].astype('category')
 
     return(dat)
-    
+
 if __name__ == '__main__':
 
+    # This is the publication iteration of regions
+    adata_slides = load_from_pickle('./data/slides_with_cell_mapping_based_regions_20240125_tampere_arneo.pkl')
 
-    adata_slides = load_from_pickle('./data/clustered_visium_data.pickle')
-    samples = get_sample_ids()
+    # Get unique region names
+    regions = adata_slides[samples[5]].obs['predicted_region'].cat.categories.tolist()
 
-    # Change the run_name variable to select the appropriate iteration
-    run_name = '20230908'
+    # Get unique regions colors
+    region_colors = adata_slides[samples[5]].uns['predicted_region_colors']
 
-    cell_mapping_dat = sc.read_h5ad('c2l_mapping_as_anndata_'+run_name+'.h5ad')
-    cell_types = list(cell_mapping_dat.var_names)
-
-    # Copy the annotation column into each member of the adata_slides object
-    for sample in samples:
-        slide = adata_slides[sample]   
-        slide.obs['tissue_region'] = cell_mapping_dat.obs.loc[slide.obs_names]['tissue_region'].astype('category')
-
-    colors_dict = cell_mapping_dat.uns['tissue_region_mapping_colors']
-    tissue_region_names = list(colors_dict.keys())
-
-    region_combinations = list(permutations(tissue_region_names,2))
-    i = 1
-
-    for sample in samples:
-        # Using three rings you get 6 immediate neigbors, 12 second neigbors and 18 third neighbors
-        sq.gr.spatial_neighbors(slide,n_neighs=6,n_rings=3)
-
-    for region_pair in region_combinations:
-        ## Subset proximal spots, calculate receptor-ligand analysis and plot
-        source = region_pair[0]
-        target = region_pair[1]
-
-        # Color order dependes on which category comes first in alphabetical order
-        if source < 'Proximal ':
-            cols = ['#919191',colors_dict[source],colors_dict[target]]
-        elif 'Proximal ' < source:
-            cols = ['#919191',colors_dict[target],colors_dict[source]]
-
-        interaction_dict = {}
-
-        for sample in samples:
-
-            slide = adata_slides[sample]
-
-            if (slide.obs['tissue_region'].str.contains(source).any()) & (slide.obs['tissue_region'].str.contains(target).any()):
+    # Create color legend
+    region_colors = adata_slides[samples[5]].uns['predicted_region_colors']
+    color_dict = dict(zip(regions,region_colors))
 
 
-                slide = get_spot_interfaces(slide, source, target)
-            
-                # Make sure there is an interface in the sample
-                if len(slide.obs['proximity_analysis'].cat.categories) == 3:
-                    sq.gr.ligrec(
-                        slide,
-                        n_perms=100,
-                        cluster_key="proximity_analysis",
-                        show_progress_bar = False
-                    )
+    valid_samples = []
+    it=0
+    fig, axs = plt.subplots(8, 6, figsize=(18, 24),dpi=120)
 
-                    proximal_spots = 'Proximal ' + target
+    for i in range(8):
+        for j in range(6):
 
-                    pvals = slide.uns['proximity_analysis_ligrec']['pvalues'][source][proximal_spots]
-                    means = slide.uns['proximity_analysis_ligrec']['means'][source][proximal_spots]
-                    tuple_array = pd.DataFrame(means[pvals<0.01][means>1]).index.values
-
-                    interaction_dict[sample] = tuple_array
-
-                    ## Plotting ##
-                    slide.uns['proximity_analysis_colors'] = cols
-
-                    # set figure axis size and dpi
-                    fig, ax = plt.subplots(figsize=(8, 8), dpi=120)
-
-                    # create spatial plot
-                    sc.pl.spatial(slide,color='proximity_analysis',size=1.3,alpha=0.8, ax = ax, show= False, title= sample)
-                    plt.tight_layout()
-
-                    # create filename with sample name
-                    filename = 'plots/receptor_ligand_interaction_analysis/' + sample + '_'+ source +'_to_'+ target +'_clusters_communication.pdf'
-
-                    # create output folder if it doesn't exist
-                    if not os.path.exists(os.path.dirname(filename)):
-                        os.makedirs(os.path.dirname(filename))
-
-                    # save plot to pdf with filename
-                    with PdfPages(filename) as pdf:
-                        pdf.savefig(fig)
-                        plt.clf()
-
-        if len(interaction_dict) > 0:
-            save_to_pickle(interaction_dict,'./data/'+source+'_to_'+target+'_ligand_receptor_proximity_interactions.pickle')
+            if it < len(samples) :
+                
+                slide = adata_slides[samples[it]]
+                # Using three rings you get 6 immediate neigbors, 12 second neigbors and 18 third neighbors
+                #sq.gr.spatial_neighbors(slide,n_neighs=6,n_rings=3)
         
-        if i == 1 | i%5==0:
-            print(str(i)/str(len(region_combinations)))
-            i+=1
+                slide = get_spot_interfaces(slide, source, target)
+
+                # Qualify sample only if there are 10 or more of both source and target spots
+                if not (slide.obs['proximity_analysis'].isna().all()):
+                    if (slide.obs['proximity_analysis'].str.contains(source).sum() >= 10) & (slide.obs['proximity_analysis'].str.contains(target).sum() >= 10):
+                    
+                        ## Plotting ##
+                        slide.uns['proximity_analysis_colors'] = [color_dict[cat] for cat in slide.obs['proximity_analysis'].cat.categories]
+
+                        # create spatial plot
+                        if 'P320' not in samples[it]:
+                            sc.pl.spatial(slide,color='proximity_analysis',title=samples[it],
+                                                    crop_coord=sample_crop_coord[samples[it]],
+                                                    size=1.5, alpha_img=0, legend_loc=None,na_color='whitesmoke',
+                                                    ax=axs[i,j],show=False
+                                                    )
+
+                        else:
+                            sc.pl.spatial(slide,color='proximity_analysis',title=samples[it],
+                                                    size=1.5, alpha_img=0, legend_loc=None,na_color='whitesmoke',
+                                                    ax=axs[i,j],show=False
+                                                    )
+
+
+                        axs[i,j].set_xlabel(None)
+                        axs[i,j].set_ylabel(None)
+
+                        # Append this sample to the list
+                        valid_samples.append(samples[it])
+                    else:
+                        axs[i,j].set_visible(False)
+                else:
+                    axs[i,j].set_visible(False)
+            else:
+                axs[i,j].set_visible(False)
+            
+            it+=1
+
+
+    plt.tight_layout()
+    plt.savefig('./plots/receptor_ligand_interaction_analysis/'+source+'_'+target+'_proximity_regions.pdf')
+    #plt.clf()
+    plt.clf()
+
+
+    #### Second part, using valid_samples to do ligrec #####
+    ligrec_dict = {}
+    for sample in valid_samples:
+
+        slide = adata_slides[sample].copy()
+        slide.obs['proximity_analysis'] = slide.obs['proximity_analysis'].cat.add_categories(['NA'])
+        slide.obs['proximity_analysis'] = slide.obs['proximity_analysis'].fillna('NA')
+
+        if (len(slide.obs['proximity_analysis'].cat.categories.tolist()) == 3):
+        
+            ligrec_res = sq.gr.ligrec(
+                slide,
+                cluster_key='proximity_analysis',
+                clusters = [source,target],
+                complex_policy='all',
+                show_progress_bar = False,
+                n_perms=1000,
+                seed=4359345,
+                copy=True,
+                use_raw=False
+            )
+
+            ligrec_dict[sample] = ligrec_res
+
+    # Save the proximal spot annotations
+    proximity_spot_annots = pd.DataFrame()
+    for s in valid_samples:
+        proximity_spot_annots = pd.concat([
+            proximity_spot_annots,
+            adata_slides[s].obs.copy()],
+            axis=0)
+
+    proximity_spot_annots = proximity_spot_annots[['sample_id','predicted_region','proximity_analysis']]
+    proximity_spot_annots = proximity_spot_annots.rename(columns={'proximity_analysis':'{}_{}_proximity'.format(source,target)})
+
+
+    proximity_spot_annots.to_csv('./data/proximity_spot_ids/{}_to_{}_spot_annotation.csv'.format(source,target))
+    save_to_pickle(ligrec_dict,'./data/region_ligrec_analysis/'+source+'_'+target+'_slides_with_ligrec.pkl')
+    print('{} to {} ligand-receptor interaction analysis has been saved!'.format(source,target))
