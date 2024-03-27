@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
             print('Region: ' + region)
             region_expression_df = pd.DataFrame()
-            region_pct_df = pd.DataFrame()
+            #region_pct_df = pd.DataFrame()
 
             for sample in tqdm(sample_list, desc="Processing samples", unit="sample"):
                 
@@ -72,10 +72,10 @@ if __name__ == '__main__':
 
                     genes_all_arr_order_match = present_genes + missing_genes
 
-                    if use_unnormalized:
-                        expr_without_missing_genes = slide_subs[:,present_genes].layers['counts'].copy().todense()
-                    else:
-                        expr_without_missing_genes = slide_subs[:,present_genes].X.copy()
+                    #if use_unnormalized:
+                    expr_without_missing_genes = slide_subs[:,present_genes].layers['counts'].copy().todense()
+                    #else:
+                        #expr_without_missing_genes = slide_subs[:,present_genes].X.copy()
 
 
                     expr_all_spots = np.concatenate((expr_without_missing_genes,np.full((expr_without_missing_genes.shape[0],len(missing_genes)), np.nan)),axis=1)
@@ -86,17 +86,19 @@ if __name__ == '__main__':
                     # Concatenate the counts from a single sample into a dataframe with all the spots
                     region_expression_df = pd.concat([region_expression_df,expr_as_df],axis=1)
 
-                    # Put the "percentage of spots expressed in" information into a dataframe
-                    pct_expressed_in = (expr_as_df != 0).sum(axis=1) / expr_as_df.shape[1]
-
-                    # Concatenate the percentage information of each sample into a datframe
-                    region_pct_df = pd.concat([region_pct_df,pct_expressed_in],axis=1)
-
                 del slide, slide_subs
 
+            # Added on 4.3.2024 prior to plotting the whole thing
+            # Previously NaN's inflated the percentage, as they were non-zero
+            region_expression_df = region_expression_df.fillna(0)
+            # Put the "percentage of spots expressed in" information into a dataframe
+            region_pct_df = pd.DataFrame((region_expression_df != 0).sum(axis=1)/region_expression_df.shape[1],columns=[region])
+
+            
             # Here you concatenate the mean of all valid spots into a dataframe
             final_expression_df = pd.concat([final_expression_df,region_expression_df.mean(axis=1)],axis=1)
-            final_percentage_df = pd.concat([final_percentage_df,region_pct_df.mean(axis=1)],axis=1)
+            final_percentage_df = pd.concat([final_percentage_df,region_pct_df],axis=1)
+        
 
         final_expression_df.columns = [r + ' ' + group_id for r in regions_list]
         final_percentage_df.columns = [r + ' ' + group_id for r in regions_list]
@@ -106,10 +108,10 @@ if __name__ == '__main__':
 
 
     # Get lists of samples in corresponding groupings
-    normal_samples = get_sample_ids_reorder(['BPH'])
+    #normal_samples = get_sample_ids_reorder(['BPH'])
     unt_samples = get_sample_ids_reorder(['untreated'])
     trt_samples = get_sample_ids_reorder(['bicalutamide','goserelin','degarelix','degarelix_apalutamide'])
-    crpc_samples = get_sample_ids_reorder(['CRPC'])
+    #crpc_samples = get_sample_ids_reorder(['CRPC'])
 
     ar_signaling_genes = ['AR','ABCC4','FKBP5','KLK3','MAF','NKX3-1','PMEPA1','div1', # AR regulated genes
     'KRT5','KRT15','TP63','div2', # Canonical basal markers
@@ -165,5 +167,5 @@ if __name__ == '__main__':
     plt.legend(loc='center left',handlelength=1.5, handleheight=1.5, bbox_to_anchor=(1.05, 0.5))
     plt.tight_layout()
 
-    plt.savefig('plots/normalized_gene_expression_heatmaps/ar_club_markers_expression.pdf')
+    plt.savefig('plots/normalized_gene_expression_heatmaps/ar_club_markers_expression_nan_fixed.pdf')
 
