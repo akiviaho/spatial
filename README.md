@@ -1,8 +1,9 @@
-### Author: Antti Kiviaho
-### Email: antti.kiviaho@tuni.fi
-### Date: 20.6.2024
-This repository contains necessary code to perform data processing and analyses related to the manuscript titled 
-*"Club-like cells persist throughout treatment and interact with immunosuppressive myeloid cells in the prostate tumor microenvironment"*.
+#### *"Club-like cells persist throughout treatment and interact with immunosuppressive myeloid cells in the prostate tumor microenvironment"*.
+
+##### Author: Antti Kiviaho
+##### Email: antti.kiviaho@tuni.fi
+##### Date: 20.6.2024
+This repository contains necessary code to perform data processing and analyses related to the manuscript.
 
 ### File formats:
 - **Jupyter notebooks (.ipynb)** that mostly contain plotting-related functions and that require less computational resources (notebooks)
