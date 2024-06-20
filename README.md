@@ -4,12 +4,12 @@
 This repository contains necessary code to perform data processing and analyses related to the manuscript titled 
 *"Club-like cells persist throughout treatment and interact with immunosuppressive myeloid cells in the prostate tumor microenvironment"*.
 
-Files are one of three kinds: 
+### File formats:
 - **Jupyter notebooks (.ipynb)** that mostly contain plotting-related functions and that require less computational resources (notebooks)
 - **Python (.py)** files that mostly contain code related to intensive computational tasks run on more resources (scripts)
 - **Bash (.sh)** files for submitting jobs to the slurm resource manager (scripts)
 
-## A detailed description of file contents follows: 
+## Detailed description of file contents: 
 
 ### Single-cell preprocessing and annotation 
 - **single-cell-preprocessing.ipynb** – Preprocessing of single-cell datasets to attain uniform format.
@@ -26,12 +26,12 @@ Files are one of three kinds:
 
 - **single-cell-annotation-from-nmf-best-iteration.ipynb** – Non-immune cell subtype annotation based on the NMF gene expression modules.
 
-- **c2l-infer-cell-type-reference.py** – Annotation-based regression of cell2location-compatible cell type signatures
+- **c2l-infer-cell-type-reference.py** – Annotation-based regression of cell2location-compatible cell type signatures.
 
 ### Spatial transcriptomics data deconvolution and analyses
-- **spatial-qc-and-normalization.ipynb** – Quality control and preprocessing of spatial transcriptomics data
+- **spatial-qc-and-normalization.ipynb** – Quality control and preprocessing of spatial transcriptomics data.
 
-- **c2l-cell-type-mapping.py** – Spatial transcriptomics data deconvolution using the cell type reference created from single-cell data
+- **c2l-cell-type-mapping.py** – Spatial transcriptomics data deconvolution using the cell type reference created from single-cell data.
 
 - **spatial-post-c2l-mapping.ipynb** – Division of spatial transcriptomics data into single-cell mapping-based (SCM) regions.
 
@@ -47,7 +47,7 @@ Files are one of three kinds:
 
 - **spatial_mapping_based_ligand_receptor_analysis.py** – Ligand-receptor interaction analysis.
 
-- **spatial-mapping-based-clusters-receptor-ligand-analyses.ipynb** – Ligand-receptor interaction analysis-based plotting (Figures 4e-4g)
+- **spatial-mapping-based-clusters-receptor-ligand-analyses.ipynb** – Ligand-receptor interaction analysis-based plotting (Figures 4e-4g).
 
 - **spatial_to_pseudobulk.py** – Generating pseudobulk expression data from spatial transcriptomics data.
 
@@ -57,4 +57,4 @@ Files are one of three kinds:
 
 - **bulk-rna-survival-analysis.ipynb** – TCGA and SU2C gene expression data analyses (Figures 5g, 5h).
 
-- **spatial_pseudobulk_analysis.ipynb** – Pseudobulk spatial transcriptomics data analysis and plots (Figures 5f, 5i)
+- **spatial_pseudobulk_analysis.ipynb** – Pseudobulk spatial transcriptomics data analysis and plots (Figures 5f, 5i).
