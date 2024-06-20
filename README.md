@@ -9,6 +9,11 @@
 
 This repository contains necessary code to perform data processing and analyses related to the manuscript.
 
+### Package versions:
+- **single_cell_analysis_environment.yml** – Containts package versions used in the analysis of spatial transcriptomics data.
+- **spatial_analysis_environment.yml** – Containts package versions used in the analysis of single-cell data.
+- **Jupyter notebooks (.ipynb)** that mostly contain plotting-related functions and that require less computational resources.
+
 ### File formats:
 - **Jupyter notebooks (.ipynb)** that mostly contain plotting-related functions and that require less computational resources.
 - **Python (.py)** files that mostly contain code related to intensive computational tasks run on more resources.
