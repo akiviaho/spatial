@@ -10,9 +10,9 @@
 This repository contains necessary code to perform data processing and analyses related to the manuscript.
 
 ### File formats:
-- **Jupyter notebooks (.ipynb)** that mostly contain plotting-related functions and that require less computational resources (notebooks)
-- **Python (.py)** files that mostly contain code related to intensive computational tasks run on more resources (scripts)
-- **Bash (.sh)** files for submitting jobs to the slurm resource manager (scripts)
+- **Jupyter notebooks (.ipynb)** that mostly contain plotting-related functions and that require less computational resources.
+- **Python (.py)** files that mostly contain code related to intensive computational tasks run on more resources.
+- **Bash (.sh)** files for submitting jobs to the slurm resource manager.
 
 ## Detailed description of file contents: 
 
